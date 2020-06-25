@@ -1,0 +1,10 @@
+---
+cluster: "test_ood_cluster"
+form:
+  - bc_account
+  - bc_num_hours
+  - bc_vnc_resolution
+  - modules
+  - bc_queue
+attributes:
+  modules: "xfce/4.12"

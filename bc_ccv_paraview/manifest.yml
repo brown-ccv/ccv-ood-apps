@@ -1,0 +1,12 @@
+---
+name: ParaView
+category: Interactive Apps
+subcategory: GUIs
+role: batch_connect
+description: |
+  This app will launch a [ParaView] GUI on the [Owens Cluster] using a **shared
+  node**. You will be able to interact with the ParaView GUI through a VNC
+  session.
+
+  [Paraview]: https://www.paraview.org/
+  [Owens cluster]: https://www.osc.edu/resources/technical_support/supercomputers/owens

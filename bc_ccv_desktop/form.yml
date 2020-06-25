@@ -1,0 +1,25 @@
+---
+# **MUST** set cluster id here that matches cluster configuration file located
+# under /etc/ood/config/clusters.d/*.yml
+# @example Use the Owens cluster at Ohio Supercomputer Center
+#     cluster: "owens"
+cluster: "test_ood_cluster"
+attributes:
+  desktop: "xfce"
+  bc_vnc_idle: 0
+  bc_vnc_resolution:
+    required: true
+  node_type: null
+  modules: "xfce/4.12"
+
+form:
+  - bc_vnc_idle
+  - desktop
+  - modules
+  - bc_account
+  - bc_num_hours
+  - bc_num_slots
+  - node_type
+  - bc_queue
+  - bc_vnc_resolution
+  - bc_email_on_started

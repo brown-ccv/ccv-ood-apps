@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Benchmark info
+echo "TIMING - Starting main script at: $(date)"
+
+# Set working directory to home directory
+cd "${HOME}"
+
+#
+# Start Jupyter Notebook Server
+#
+
+<%- unless context.modules.blank? -%>
+# Purge the module environment to avoid conflicts
+module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0 
+
+# Load the require modules
+#module load <%= context.modules %>
+
+# List loaded modules
+#module list
+#<%- end -%>
+
+# Benchmark info
+echo "TIMING - Starting jupyter at: $(date)"
+
+# Launch the Jupyter Notebook Server
+set -x
+#eval "$(/users/aragaven/anaconda3/ac3/bin/conda shell.bash hook)"
+#export PATH=/users/aragaven/anaconda3/ac3/bin:$PATH
+export PATH=<%=context.jupyter_path%>:$PATH
+jupyter notebook --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>
