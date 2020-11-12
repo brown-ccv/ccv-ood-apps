@@ -28,7 +28,7 @@ attributes:
   #modules: "python"
   modules: ""
   jupyter_path:
-    value: "/users/aragaven/anaconda3/ac3/bin"
+    value: "/gpfs/runtime/opt/ood_system/ac3/bin"
 
   # Any extra command line arguments to feed to the `jupyter notebook ...`
   # command that launches the Jupyter notebook within the batch job
