@@ -8,47 +8,42 @@
 # under /etc/ood/config/clusters.d/*.yml
 # @example Use the Owens cluster at Ohio Supercomputer Center
 #     cluster: "owens"
-cluster: "test_ood_cluster"
-
-# Define attribute values that aren't meant to be modified by the user within
-# the Dashboard form
+cluster: "ood_oscar"
 attributes:
-  # Set the corresponding modules that need to be loaded for Jupyter to run
-  #
-  # @note It is called within the batch job as `module load <modules>` if
-  #   defined
-  # @example Do not load any modules
-  #     modules: ""
-  # @example Using default python module
-  #     modules: "python"
-  # @example Using specific python module
-  #     modules: "python/3.5"
-  # @example Using combination of modules
-  #     modules: "python/3.5 cuda/8.0.44"
-  #modules: "python"
-  modules: ""
+  modules:
+    value: ""
+    help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
   jupyter_path:
     value: "/gpfs/runtime/opt/ood_system/ac3/bin"
-
-  # Any extra command line arguments to feed to the `jupyter notebook ...`
-  # command that launches the Jupyter notebook within the batch job
-  extra_jupyter_args: ""
+  extra_jupyter_args:
+    value: ""
+    help: "Any extra command line arguments to feed to the `jupyter notebook...` command that launches the Jupyter notebook within the batch job"
   bc_account:
-    label: "Project"
-    help: "You can leave this blank if **not** in multiple projects."
-# All of the attributes that make up the Dashboard form (in respective order),
-# and made available to the submit configuration file and the template ERB
-# files
-#
-# @note You typically do not need to modify this unless you want to add a new
-#   configurable value
-# @note If an attribute listed below is hard-coded above in the `attributes`
-#   option, then it will not appear in the form page that the user sees in the
-#   Dashboard
+    label: "Account"
+    help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
+  jupyterlab_switch:
+    widget: "check_box"
+    label: "Use JupyterLab instead of Jupyter Notebook?"
+    help: |
+      JupyterLab is the next generation of Jupyter, and is completely compatible with existing Jupyter Notebooks.
+  num_cores:
+    widget: "number_field"
+    label: "Number of cores"
+    value: 1
+    help: |
+      Number of cores on node type
+  sh_mem:
+    label: "Memory (GB) (optional)"
+    widget: "number_field"
+    help: "<small>Amount of memory to allocate</small>"
+    value: 4
 form:
   - modules
   - extra_jupyter_args
   - jupyter_path
+  - jupyterlab_switch
+  - num_cores
+  - sh_mem
   - bc_account
   - bc_queue
   - bc_num_hours

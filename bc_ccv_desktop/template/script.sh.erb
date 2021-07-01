@@ -9,7 +9,7 @@ cd "${HOME}"
 #module purge && module restore
 
 # Load the require modules
-module load <%= context.modules %>
+module load <%= context.x_module %>
 
 # Ensure that the user's configured login shell is used
 export SHELL="$(getent passwd $USER | cut -d: -f7)"

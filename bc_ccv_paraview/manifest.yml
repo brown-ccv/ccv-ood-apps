@@ -4,7 +4,7 @@ category: Interactive Apps
 subcategory: GUIs
 role: batch_connect
 description: |
-  This app will launch a [ParaView] GUI on the [Owens Cluster] using a **shared
+  This app will launch a [ParaView] GUI on the [Oscar Cluster] using a **shared
   node**. You will be able to interact with the ParaView GUI through a VNC
   session.
 

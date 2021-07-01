@@ -9,9 +9,10 @@ cd "${HOME}"
 #
 # Launch Xfce Window Manager and Panel
 #
-module load <%= context.modules %>
-module load mpi/openmpi_4.0.1_gcc
-module load paraview/5.4.1
+module load <%= context.x_module %>
+module load <%= context.sh_modules %>
+module load <%= context.pv_module %>
+#module load paraview/5.4.1
 (
   # module restore
   export XDG_CONFIG_HOME="<%= session.staged_root.join("config") %>"

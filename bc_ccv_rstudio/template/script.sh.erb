@@ -45,7 +45,8 @@ export RSESSION_WRAPPER_FILE="${PWD}/rsession.sh"
 umask 077
 sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
   #!/usr/bin/env bash
-  module load R/3.5.2
+  module load <%= context.r_module %>
+  # module load R/3.5.2
   export PATH="$PATH:/usr/lib/rstudio-server/bin"
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64"
   # Log all output from this script
@@ -84,4 +85,4 @@ rserver --www-port "${port}" \
 # --auth-encrypt-password 0  --rsession-path "${RSESSION_WRAPPER_FILE}" \
 # --server-data-dir /tmp
 
-echo 'Singularity has exited...'
+# echo 'Singularity has exited...'

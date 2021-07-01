@@ -1,14 +1,27 @@
 ---
-cluster: "test_ood_cluster"
+cluster: "ood_oscar"
 form:
   - bc_account
   - bc_queue
   - bc_num_hours
   - bc_num_slots
-  - bc_email_on_started
+  - num_cores
+  - sh_mem
   - modules
   - r_module
+  - bc_email_on_started
 attributes:
+
+  bc_num_slots: 1
+  num_cores:
+    value: 1
+    widget: "number_field"
+    help: "Indicate the number of cores you need. The default is 1"
+  sh_mem:
+    label: "Memory (GB) (optional)"
+    widget: "number_field"
+    help: "<small>Amount of memory to allocate</small>"
+    value: 4
   r_module:
     widget: "text_field"
     value: "R/3.5.2"

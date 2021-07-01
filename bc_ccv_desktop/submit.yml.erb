@@ -1,5 +1,24 @@
 ---
 batch_connect:
   template: vnc
+script:
+  native: [
+          "-N <%= bc_num_slots %>",
+          "-c <%= num_cores %>",
+          <%- if sh_queue == "vnc"  %>
+          "--partition=<%= sh_queue %>",
+          "--qos=vnc",
+          <%- end %>
+          <%- if sh_queue == "gpu"  %>
+          "--partition=<%= sh_queue %>",
+          <%- end %>
+          <%- if num_gpus.to_i > 0 %>
+          "--gres=gpu:<%= num_gpus %>",
+          <%- if sh_queue == "vnc"  %>
+          "--constraint=gpu",
+          <%- end %>
+          <%- end %>
+          "--mem=<%= sh_mem %>GB"
+          ]
 #script:
 #  native: ["-w" , "node452"]
