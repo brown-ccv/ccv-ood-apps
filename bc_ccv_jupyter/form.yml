@@ -26,22 +26,37 @@ attributes:
   bc_account:
     label: "Condo account"
     help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
+  bc_queue:
+    value: ""
+    label: "Partition"
+    help: "You can leave this blank if you are **not** using the default, else select the partition here. if you are choosing a gpu partition also select the appropriate number of GPUs below"
+  gpu_count:
+    widget: "number_field"
+    label: "Number of GPUs"
+    value: 1
+    min: 1
+    max: 4
+    step: 1
   jupyterlab_switch:
     widget: "check_box"
     label: "Use JupyterLab instead of Jupyter Notebook?"
     help: |
       JupyterLab is the next generation of Jupyter, and is completely compatible with existing Jupyter Notebooks.
+  bc_num_slots: 1
   num_cores:
     widget: "number_field"
     label: "Number of cores"
     value: 1
     help: |
-      Number of cores on node type
-  sh_mem:
-    label: "Memory (GB) (optional)"
-    widget: "number_field"
-    help: "<small>Amount of memory to allocate</small>"
-    value: 4
+      Number of cores on the Node
+  memtask:
+    widget: "text_field"
+    value: "default"
+    label: "Memory per job"
+    help: |
+      - **default** - Use default, 2.8 GB per task.
+      - **512M** - Use 512 MB.
+      - **128G** - Use 128 GB, this is the maximum on notchpeak-shared-short.
 form:
   - jupyter_path
   - conda_env
@@ -49,9 +64,10 @@ form:
   - jupyterlab_switch
   - extra_jupyter_args
   - num_cores
-  - sh_mem
+  - memtask
   - bc_account
   - bc_queue
   - bc_num_hours
   - bc_num_slots
   - bc_email_on_started
+  - gpu_count

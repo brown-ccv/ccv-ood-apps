@@ -23,10 +23,16 @@ batch_connect:
 # Configure the job script submission parameters for the batch job here
 # @see http://www.rubydoc.info/gems/ood_core/OodCore/Job/Script
 #
-#script:
-#  queue_name: "queue1"
-#  accounting_id: "account1"
-#  email_on_started: true
-#  native: # ... array of command line arguments ...
-#script:
-#  native: ["-w" , "node456"]
+script:
+  native:
+    - "-c"
+    - "<%= num_cores %>" 
+    - "-n"
+    - "1" 
+    <%- if partition == "gpu"  or partition == "gpu-he" -%>
+    - "--gres=gpu:<%= gpu_count %>"
+    <%- end -%> 
+    <%- if memtask != "default" -%>
+    - "--mem"
+    - "<%= memtask %>"
+    <%- end -%> 

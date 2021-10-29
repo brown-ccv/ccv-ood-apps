@@ -6,6 +6,8 @@ script:
     - "-N <%= bc_num_slots %>"
     - "-c <%= num_cores %>"
     - "--mem=<%= sh_mem %>GB"
+    - "-n"
+    - "1"
     #- "--nodes=<%= bc_num_slots %> "
     #- "--cpus-per-task=<%= num_cores %> "
     #- "--mem=<%= sh_mem %>GB"
