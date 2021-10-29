@@ -1,0 +1,15 @@
+---
+batch_connect:
+  template: vnc
+script:
+  native:
+    - "-N"
+    - "1"
+    - "-n"
+    - "1" 
+    - "-c"
+    - "<%= num_cores %>"
+    <%- if memtask != "default" -%>
+    - "--mem"
+    - "<%= memtask %>"
+    <%- end -%>

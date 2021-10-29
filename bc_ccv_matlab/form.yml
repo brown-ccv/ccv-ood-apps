@@ -1,0 +1,57 @@
+---
+title: "MATLAB on OSCAR"
+cluster: "ood_oscar"
+attributes:
+  num_cores:
+    widget: "number_field"
+    label: "Number of cores"
+    value: 1
+    help: |
+      Maximum of 32 tasks is allowed 
+    min: 1
+    max: 32
+    step: 1
+  bc_num_hours:
+    value: 1
+    min: 1
+    step: 1
+    help: "Specify the Wall time in hours"
+  bc_vnc_resolution:
+    required: true
+  version:
+    widget: select
+    label: "MATLAB version"
+    help: "This defines the version of MATLAB you want to load."
+    options:
+      - [ "R2021a", "matlab/R2021a" ]
+      - [ "R2019a", "matlab/R2019a" ]
+      - [ "R2018b", "matlab/R2018b" ]
+      - [ "R2018a", "matlab/R2018a" ]
+      - [ "R2017a", "matlab/R2017a" ]
+      - [ "R2017b", "matlab/R2017b" ]
+      - [ "R2016a", "matlab/R2016a" ]
+  bc_account:
+    label: "Condo Account"
+    value: ""
+  bc_queue:
+    label: "Partition"
+    value: ""
+  memtask:
+    widget: "text_field"
+    value: "default"
+    label: "Memory per job"
+    help: |
+      - **default** - Use default, 4 GB per task.
+      - **512M** - Use 512 MB.
+      - **128G** - Use 128 GB.
+  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
+form:
+  - version
+  - num_cores
+  - bc_num_hours
+  - memtask
+  - bc_account
+  - bc_queue
+  - bc_vnc_resolution
+  - bc_email_on_started
+  - x_module
