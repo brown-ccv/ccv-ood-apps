@@ -37,6 +37,9 @@ SALT="$(create_passwd 16)"
 password="$(create_passwd 16)"
 PASSWORD_SHA1="$(echo -n "${password}${SALT}" | openssl dgst -sha1 | awk '{print $NF}')"
 
+# Notebook root directory
+export NOTEBOOK_ROOT="${NOTEBOOK_ROOT:-${HOME}}"
+
 # The `$CONFIG_FILE` environment variable is exported as it is used in the main
 # `script.sh.erb` file when launching the Jupyter Notebook server.
 export CONFIG_FILE="${PWD}/config.py"
@@ -45,6 +48,7 @@ export CONFIG_FILE="${PWD}/config.py"
 (
 umask 077
 cat > "${CONFIG_FILE}" << EOL
+c.JupyterApp.config_file_name = 'ondemand_config'
 c.NotebookApp.ip = '*'
 c.NotebookApp.port = ${port}
 c.NotebookApp.port_retries = 0

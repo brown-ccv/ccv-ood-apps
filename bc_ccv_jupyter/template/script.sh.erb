@@ -6,6 +6,10 @@ echo "TIMING - Starting main script at: $(date)"
 # Set working directory to home directory
 cd "${HOME}"
 
+# Workaround for directory permission error
+# #unset XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR=""
+
 #
 # Start Jupyter Notebook Server
 #
