@@ -1,0 +1,37 @@
+---
+cluster: "ood_oscar"
+form:
+  - bc_account
+  - bc_queue
+  - bc_num_hours
+  - bc_num_slots
+  - num_cores
+  - sh_mem
+  - r_singularity_container_path
+  - r_package_path
+  - r_exec_path
+  - r_module
+  - modules
+  - bc_email_on_started
+attributes:
+
+  bc_num_slots: 1
+  num_cores:
+    value: 1
+    widget: "number_field"
+    help: "Indicate the number of cores you need. The default is 1"
+  sh_mem:
+    label: "Memory (GB) (optional)"
+    widget: "number_field"
+    help: "<small>Amount of memory to allocate</small>"
+    value: 4
+  r_singularity_container_path:
+    widget: "text_field"
+    value: "/gpfs/scratch/aragaven"
+    help: "The full path to the directory of the container that you wish you run. This will be the sif file generated when you use `singularity pull docker://xyz`" 
+  r_package_path:
+    widget: "text_field"
+    value: "~/R"
+  r_exec_path:
+    widget: "text_field"
+    value: "~/bin/R"
