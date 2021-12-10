@@ -55,6 +55,11 @@ exec rsession "\${@}"
 END
 
 chmod +x ${workdir}/rsession.sh
+<%- if context.r_package_path.blank? -%>
+export SINGULARITY_BIND="${r_package_path}:/opt/R/site-library,${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
+<%- else -%>
+export SINGULARITY_BIND=${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
+<%- end -%>
 
 export SINGULARITY_BIND="${r_package_path}:/usr/local/lib/R/site-library,${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
 
