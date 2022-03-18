@@ -11,8 +11,14 @@ form:
   - r_module
   - bc_email_on_started
 attributes:
-
+  bc_account:
+    label: "Condo account"
+    help: "You can leave this blank if you are not using a condo else enter the condo name here for example cbc-condo"
   bc_num_slots: 1
+  bc_queue:
+    value: ""
+    label: "Partition"
+    help: "You can leave this blank if you are **not** using the default, else select the partition here"
   num_cores:
     value: 1
     widget: "number_field"
@@ -22,6 +28,19 @@ attributes:
     widget: "number_field"
     help: "<small>Amount of memory to allocate</small>"
     value: 4
+  modules:
+    value: ""
+    help: "You can leave this blank if you are not loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple modules use: `abc/12.3  python/2.7` "
   r_module:
-    widget: "text_field"
-    value: "R/3.5.2"
+    widget: select
+    label: "R version"
+    help: "This defines the version of R you want to load."
+    options:
+      - [ "R 4,1,0", "R/4.1.0 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018 " ]
+      - [ "R 4.0.5", "R/4.0.5 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018" ]
+      - [ "R 4.0.3", "R/4.0.3 pcre2/10.35 gcc/8.3" ]
+      - [ "R 4.0.0", "R/4.0.0 pcre2/10.35 " ]
+      - [ "R 3.6.3", "R/3.6.3" ]
+      - [ "R 3.6.0", "R/3.6.0" ]
+      - [ "R 3.5.2", "R/3.5.2" ]
+      - [ "R 3.4.4", "R/3.4.4" ]
