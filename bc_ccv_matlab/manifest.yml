@@ -1,7 +1,7 @@
 ---
 name: MATLAB on OSCAR
 category: Interactive Apps
-subcategory: GUIs
+subcategory: Default GUIs
 role: batch_connect
 description: |
   This app will launch a [MATLAB] GUI on the [OSCAR] cluster. You will be able

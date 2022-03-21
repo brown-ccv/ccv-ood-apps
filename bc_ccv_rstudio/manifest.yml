@@ -1,7 +1,7 @@
 ---
 name: RStudio Server
 category: Interactive Apps
-subcategory: Servers
+subcategory: Default GUIs
 role: batch_connect
 description: |
   This app will launch an RStudio server on one or more nodes.

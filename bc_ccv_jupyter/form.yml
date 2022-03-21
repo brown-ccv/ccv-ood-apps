@@ -13,10 +13,16 @@ attributes:
   modules:
     value: ""
     help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
-  jupyter_path:
-    label: "Conda Path"
-    value: "/gpfs/runtime/opt/ood_system/ac3/bin"
-    help: "The above is the default location to your base conda installation. This should allow you to launch your other environmnets from within Jupyter"
+  anaconda_module:
+    widget: select
+    label: "anaconda module"
+    help: "Select the anaconda module you want to run your jupyter-notebook from "
+    options:
+      - [ "anaconda/2-4.3.0", "anaconda/2-4.3.0"]
+      - [ "anaconda/2020.02" , "anaconda/2020.02"]
+      - [ "anaconda/3-5.2.0" , "anaconda/3-5.2.0"]
+      - [ "anaconda/2-5.3.0" , "anaconda/2-5.3.0"]
+      - [ " anaconda/3-4.3.0", "anaconda/3-4.3.0"]
   conda_env:
     value: ""
     help: "Type in the specific conda environment you want to launch the Jupyer notebook from. If you want you can choose the environment from the Jupyter interface instead presuming you have Jupyter installed in the base environment. You **will** need to provide this if Jupyter is only installed in a particular environment. The is the argument to `conda active myenv`. You would only put in `myenv` here. "
@@ -30,18 +36,6 @@ attributes:
     value: ""
     label: "Partition"
     help: "You can leave this blank if you are **not** using the default, else select the partition here. if you are choosing a gpu partition also select the appropriate number of GPUs below"
-  gpu_count:
-    widget: "number_field"
-    label: "Number of GPUs"
-    value: 1
-    min: 1
-    max: 4
-    step: 1
-  jupyterlab_switch:
-    widget: "check_box"
-    label: "Use JupyterLab instead of Jupyter Notebook?"
-    help: |
-      JupyterLab is the next generation of Jupyter, and is completely compatible with existing Jupyter Notebooks.
   bc_num_slots: 1
   num_cores:
     widget: "number_field"
@@ -58,10 +52,10 @@ attributes:
       - **512M** - Use 512 MB.
       - **128G** - Use 128 GB, this is the maximum on notchpeak-shared-short.
 form:
-  - jupyter_path
+  - anaconda_module
   - conda_env
   - modules
-  - jupyterlab_switch
+  #- jupyterlab_switch
   - extra_jupyter_args
   - num_cores
   - memtask
@@ -70,4 +64,3 @@ form:
   - bc_num_hours
   - bc_num_slots
   - bc_email_on_started
-  - gpu_count

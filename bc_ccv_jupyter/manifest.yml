@@ -1,7 +1,7 @@
 ---
 name: Jupyter Notebook
 category: Interactive Apps
-subcategory: Servers
+subcategory: Default GUIs
 role: batch_connect
 description: |
-  This app will launch a Jupyter Notebook server on one or more nodes.
+  This app will launch a Jupyter Notebook server on one nodes. Use this application if you are using the default anaconda modules.
