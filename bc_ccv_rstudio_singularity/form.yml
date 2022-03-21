@@ -11,6 +11,7 @@ form:
   - r_package_path
   - r_exec_path
   - r_module
+  - additional_data_path
   - modules
   - bc_email_on_started
 attributes:
@@ -32,6 +33,12 @@ attributes:
   r_package_path:
     widget: "text_field"
     value: "~/R"
+    help: "The full path to the directory of where you want to install the packages locally. When you provide this option, packages will be installed locally instead of in your container. You might want to use this in the context of testing or if you prefer to use a base R container and install everything on the fly." 
   r_exec_path:
     widget: "text_field"
     value: "~/bin/R"
+    help: " This is the path where are the temporary files for the R executable are stored when running the singularity container. This path usually is removed once the container is stopped and you might want to setup a default path somewhere in your scratch directory instead of the default value provided here."
+  additional_data_path:
+    widget: "text_field"
+    value: ""
+    help: "Enter any other path on OSCAR that you want to be accessible to your container. By default your home and scratch paths are allowed access, but if you wanted to access any specific paths on `/gpfs/data` that will be unavailable to your container unless you specifiy it here. If you need to specify multiple paths seperate them by commas for eg `/gpfs/data/abc,/gpfs/data/cde`"

@@ -59,9 +59,13 @@ export SINGULARITY_BIND="${r_package_path}:/opt/R/site-library,${workdir}/run:/r
 <%- end -%>
 
 #export SINGULARITY_BIND="${r_package_path}:/usr/local/lib/R/site-library,${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
-# Add data paths from user
-export SINGULARITY_BINDPATH="/gpfs/data/cbc,/gpfs/scratch/$USER"
-
+# Add data paths from use
+<%- if context.additional_data_path.blank? -%>
+export SINGULARITY_BINDPATH="/gpfs/scratch/$USER,/users/$USER"
+<%- else -%>
+add_path=$(echo "<%= context.additional_data_path %>" |  xargs) 
+export SINGULARITY_BINDPATH="${add_path},/gpfs/scratch/$USER,/users/$USER"
+<%- end -%>
 # Do not suspend idle sessions.
 # # Alternative to setting session-timeout-minutes=0 in /etc/rstudio/rsession.conf
 # # https://github.com/rstudio/rstudio/blob/v1.4.1106/src/cpp/server/ServerSessionManager.cpp#L126
