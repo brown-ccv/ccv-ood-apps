@@ -1,5 +1,5 @@
 ---
-name: Jupyter Notebook
+name: Basic Jupyter Notebook
 category: Interactive Apps
 subcategory: Default GUIs
 role: batch_connect
