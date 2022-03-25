@@ -15,8 +15,8 @@ attributes:
     help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
   anaconda_module:
     widget: select
-    label: "anaconda module"
-    help: "Select the anaconda module you want to run your jupyter-notebook from "
+    label: "OSCAR Anaconda module"
+    help: "Select the anaconda module on OSCAR  you want to run your jupyter-notebook from "
     options:
       - [ "anaconda/2-4.3.0", "anaconda/2-4.3.0"]
       - [ "anaconda/2020.02" , "anaconda/2020.02"]
@@ -28,14 +28,14 @@ attributes:
     help: "Type in the specific conda environment you want to launch the Jupyer notebook from. If you want you can choose the environment from the Jupyter interface instead presuming you have Jupyter installed in the base environment. You **will** need to provide this if Jupyter is only installed in a particular environment. The is the argument to `conda active myenv`. You would only put in `myenv` here. "
   extra_jupyter_args:
     value: ""
-    help: "Any extra command line arguments to feed to the `jupyter notebook...` command that launches the Jupyter notebook within the batch job"
+    help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
   bc_account:
     label: "Condo account"
     help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
   bc_queue:
     value: ""
     label: "Partition"
-    help: "You can leave this blank if you are **not** using the default, else select the partition here. if you are choosing a gpu partition also select the appropriate number of GPUs below"
+    help: "You can leave this blank if you are using the default for your account. Else you can specify the partition you want to run the jobs on in this field. A detailed overview of the partitions on OSCAR can be found in our [docs](https://docs.ccv.brown.edu/oscar/submitting-jobs/slurm) " 
   bc_num_slots: 1
   num_cores:
     widget: "number_field"

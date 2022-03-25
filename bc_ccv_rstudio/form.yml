@@ -13,12 +13,12 @@ form:
 attributes:
   bc_account:
     label: "Condo account"
-    help: "You can leave this blank if you are not using a condo else enter the condo name here for example cbc-condo"
+    help: "You can leave this blank if you are not using a condo else enter the condo name here for example `cbc-condo`"
   bc_num_slots: 1
   bc_queue:
     value: ""
     label: "Partition"
-    help: "You can leave this blank if you are **not** using the default, else select the partition here"
+    help: "You can leave this blank if you are using the default for your account. Else you can specify the partition you want to run the jobs on in this field. A detailed overview of the partitions on OSCAR can be found in our [docs](https://docs.ccv.brown.edu/oscar/submitting-jobs/slurm) "
   num_cores:
     value: 1
     widget: "number_field"
@@ -26,7 +26,7 @@ attributes:
   sh_mem:
     label: "Memory (GB) (optional)"
     widget: "number_field"
-    help: "<small>Amount of memory to allocate</small>"
+    help: "Specify the amount of memory to allocate for the Job in Gigabytes"
     value: 4
   modules:
     value: ""
@@ -36,7 +36,7 @@ attributes:
     label: "R version"
     help: "This defines the version of R you want to load."
     options:
-      - [ "R 4,1,0", "R/4.1.0 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018 " ]
+      - [ "R 4.1.0", "R/4.1.0 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018 " ]
       - [ "R 4.0.5", "R/4.0.5 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018" ]
       - [ "R 4.0.3", "R/4.0.3 pcre2/10.35 gcc/8.3" ]
       - [ "R 4.0.0", "R/4.0.0 pcre2/10.35 " ]

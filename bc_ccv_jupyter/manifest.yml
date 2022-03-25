@@ -4,4 +4,4 @@ category: Interactive Apps
 subcategory: Default GUIs
 role: batch_connect
 description: |
-  This app will launch a Jupyter Notebook server on one nodes. Use this application if you are using the default anaconda modules.
+  This app will allow you to launch a Jupyter Notebook server on one node. Use this application if you are using the anaconda modules provided on OSCAR <div class="alert alert-danger" role="alert">THIS APP IS STILL IN BETA</div>.
