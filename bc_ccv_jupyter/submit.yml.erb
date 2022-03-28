@@ -29,7 +29,7 @@ script:
     - "<%= num_cores %>" 
     - "-n"
     - "1" 
-    <%- if partition == "gpu"  or partition == "gpu-he"  or parition == "3090-gcondo" or partition == "a6000-gcondo" or partition == "gcondo" or partition == "gpu-condo" or partiion== "gpu-debug" -%>
+    <%- if partition == "gpu"  or partition == "gpu-he"  or partition == "3090-gcondo" or partition == "a6000-gcondo" or partition == "gcondo" or partition == "gpu-condo" or partition== "gpu-debug" -%>
     - "--gres=gpu:<%= gpu_count %>"
     <%- end -%> 
     <%- if memtask != "default" -%>
