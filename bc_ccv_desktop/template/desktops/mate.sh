@@ -1,3 +1,6 @@
+mkdir -p ${HOME}/.ood_config
+export XDG_CONFIG_HOME="${HOME}/.ood_config"
+
 # Turn off screensaver (this may not exist at all)
 gsettings set org.mate.screensaver idle-activation-enabled false
 
@@ -5,12 +8,12 @@ gsettings set org.mate.screensaver idle-activation-enabled false
 gsettings set org.mate.session gnome-compat-startup "['smproxy']"
 
 # Remove any preconfigured monitors
-if [[ -f "${HOME}/.config/monitors.xml" ]]; then
-  mv "${HOME}/.config/monitors.xml" "${HOME}/.config/monitors.xml.bak"
+if [[ -f "${XDG_CONFIG_HOME}/monitors.xml" ]]; then
+  mv "${XDG_CONFIG_HOME}/monitors.xml" "${XDG_CONFIG_HOME}/monitors.xml.bak"
 fi
 
 # Disable useless services on autostart
-AUTOSTART="${HOME}/.config/autostart"
+AUTOSTART="${XDG_CONFIG_HOME}/autostart"
 rm -fr "${AUTOSTART}"    # clean up previous autostarts
 mkdir -p "${AUTOSTART}"
 for service in "gnome-keyring-gpg" "gnome-keyring-pkcs11" "gnome-keyring-secrets" "gnome-keyring-ssh" "mate-volume-control-applet" "polkit-mate-authentication-agent-1" "pulseaudio" "rhsm-icon" "spice-vdagent" "xfce4-power-manager"; do

@@ -1,13 +1,20 @@
 # Remove any preconfigured monitors
-if [[ -f "${HOME}/.config/monitors.xml" ]]; then
-  mv "${HOME}/.config/monitors.xml" "${HOME}/.config/monitors.xml.bak"
+
+mkdir -p ${HOME}/.ood_config
+
+export XDG_CONFIG_HOME="${HOME}/.ood_config"
+
+if [[ -f "${XDG_CONFIG_HOME}/monitors.xml" ]]; then
+  mv "${XDG_CONFIG_HOME}/monitors.xml" "${XDG_CONFIG_HOME}/monitors.xml.bak"
 fi
 
 # Copy over default panel if doesn't exist, otherwise it will prompt the user
-PANEL_CONFIG="${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+
+PANEL_CONFIG="${XDG_CONFIG_HOME}/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 if [[ ! -e "${PANEL_CONFIG}" ]]; then
   mkdir -p "$(dirname "${PANEL_CONFIG}")"
   cp "/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
+  #cp "/gpfs/runtime/opt/xfce/4.16/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
 fi
 
 # Disable startup services
@@ -15,7 +22,7 @@ fi
 xfconf-query -c xfce4-session -p /startup/gpg-agent/enabled -n -t bool -s false
 
 # Disable useless services on autostart
-AUTOSTART="${HOME}/.config/autostart"
+AUTOSTART="${XDG_CONFIG_HOME}/autostart"
 rm -fr "${AUTOSTART}"    # clean up previous autostarts
 mkdir -p "${AUTOSTART}"
 for service in "pulseaudio" "rhsm-icon" "spice-vdagent" "tracker-extract" "tracker-miner-apps" "tracker-miner-user-guides" "xfce4-power-manager" "xfce-polkit"; do
@@ -23,7 +30,7 @@ for service in "pulseaudio" "rhsm-icon" "spice-vdagent" "tracker-extract" "track
 done
 
 # Run Xfce4 Terminal as login shell (sets proper TERM)
-TERM_CONFIG="${HOME}/.config/xfce4/terminal/terminalrc"
+TERM_CONFIG="${XDG_CONFIG_HOME}/xfce4/terminal/terminalrc"
 if [[ ! -e "${TERM_CONFIG}" ]]; then
   mkdir -p "$(dirname "${TERM_CONFIG}")"
   sed 's/^ \{4\}//' > "${TERM_CONFIG}" << EOL
