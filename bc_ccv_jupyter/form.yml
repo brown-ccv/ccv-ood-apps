@@ -37,6 +37,14 @@ attributes:
     label: "Partition"
     help: "You can leave this blank if you are using the default for your account. Else you can specify the partition you want to run the jobs on in this field. A detailed overview of the partitions on OSCAR can be found in our [docs](https://docs.ccv.brown.edu/oscar/submitting-jobs/slurm) " 
   bc_num_slots: 1
+  gpu_count:
+    widget: "number_field"
+    label: "Number of GPUs"
+    value: 1
+    min: 1
+    max: 4
+    step: 1
+    help: "<div class=\"alert alert-danger\" role=\"alert\"> This value is only used if you specify the appropriate gpu partition</div>."
   num_cores:
     widget: "number_field"
     label: "Number of cores"
@@ -59,6 +67,7 @@ form:
   - extra_jupyter_args
   - num_cores
   - memtask
+  - gpu_count
   - bc_account
   - bc_queue
   - bc_num_hours

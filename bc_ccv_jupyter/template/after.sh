@@ -11,3 +11,4 @@ else
   clean_up 1
 fi
 sleep 2
+mv $HOME/.local/share/jupyter/kernels.bak $HOME/.local/share/jupyter/kernels

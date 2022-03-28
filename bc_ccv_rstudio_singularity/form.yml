@@ -29,7 +29,7 @@ attributes:
   r_singularity_container_path:
     label: "Singularity Container Path  (required)"
     widget: "text_field"
-    value: "/gpfs/scratch/aragaven"
+    required: true
     help: "The full path to the directory of the container that you wish you run. This will be the sif file generated when you use `singularity pull docker://xyz`" 
   r_package_path:
     label: "Package install Path  (optional)"
@@ -39,6 +39,7 @@ attributes:
   r_exec_path:
     label: "Path for R Executable ( required)"
     widget: "text_field"
+    required: true
     value: "~/bin/R"
     help: " This is the path where are the temporary files for the R executable are stored when running the singularity container. This path usually is removed once the container is stopped and you might want to setup a default path somewhere in your scratch directory instead of the default value provided here."
   additional_data_path:

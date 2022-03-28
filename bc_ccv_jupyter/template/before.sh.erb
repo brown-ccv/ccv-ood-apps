@@ -29,6 +29,9 @@
 # Export the module function if it exists
 [[ $(type -t module) == "function" ]] && export -f module
 
+# Move the default kernel folder for the user
+mv $HOME/.local/share/jupyter/kernels $HOME/.local/share/jupyter/kernels.bak 
+
 # Find available port to run server on
 port=$(find_port)
 
