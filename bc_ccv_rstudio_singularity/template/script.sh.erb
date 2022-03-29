@@ -10,6 +10,8 @@ module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
 # module load <%= context.r_module %>
 
 workdir=$(echo "<%= context.r_exec_path %>" |  xargs) 
+if [ -d "$workir" ]; then rm -Rf $workdir; mkdir -p $workdir; fi
+
 r_package_path=$(echo "<%= context.r_package_path %>" |  xargs) 
 r_singularity_path=$(echo "<%= context.r_singularity_container_path %>" | xargs)
 echo " *** checking Assignment ** "
