@@ -1,0 +1,7 @@
+---
+name: RStudio on Singularity
+category: Interactive Apps
+subcategory: Advanced GUIs
+role: batch_connect
+description: |
+  This app will launch an RStudio server on one or more nodes in a singulairty container. There are a few steps that need to be undertaken, so please read the documentation carefully. If you are not familair with containers then it might be simpler to run the R Studio apps that works with the R modules and in the General Users category,

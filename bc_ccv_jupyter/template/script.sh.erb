@@ -14,9 +14,10 @@ export XDG_RUNTIME_DIR=""
 # Start Jupyter Notebook Server
 #
 # load the required conda module
-source <%=context.jupyter_path%>/activate
+module load <%=context.anaconda_module%>
 
 <%- unless context.conda_env.blank? -%>
+source /gpfs/runtime/opt/<%=context.anaconda_module%>/etc/profile.d/conda.sh
 conda activate <%=context.conda_env%>
 <%- end -%>
 
@@ -27,15 +28,13 @@ module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
 # Load the require modules
 module load <%=context.modules%>
 
-# List loaded modules
-#module list
 <%- end -%>
 
 # Benchmark info
+# List loaded modules
+module list
 echo "TIMING - Starting jupyter at: $(date)"
 
 # Launch the Jupyter Notebook Server
 set -x
-#export PATH=<%=context.jupyter_path%>:$PATH
-#jupyter notebook --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>
-jupyter <%= context.jupyterlab_switch == "1" ? "lab" : "notebook" %> --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>
+jupyter-notebook --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>

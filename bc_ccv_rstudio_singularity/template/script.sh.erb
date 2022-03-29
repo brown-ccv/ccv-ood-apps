@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+
+# Purge the module environment to avoid conflicts
+module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
+
+# Load the required environment
+
+# Load the R module
+# module load <%= context.r_module %>
+
+workdir=$(echo "<%= context.r_exec_path %>" |  xargs) 
+if [ -d "$workir" ]; then rm -Rf $workdir; mkdir -p $workdir; fi
+
+r_package_path=$(echo "<%= context.r_package_path %>" |  xargs) 
+r_singularity_path=$(echo "<%= context.r_singularity_container_path %>" | xargs)
+echo " *** checking Assignment ** "
+echo $workdir
+echo $r_package_path
+echo $r_singularity_path
+
+
+
+echo "Printing PATH"
+echo $PATH
+#
+# Start RStudio Server
+#
+
+# Create temporary directory to be populated with directories to bind-mount in the container
+# # where writable file systems are necessary. Adjust path as appropriate for your computing environment.
+# workdir=$(python -c 'import tempfile; print(tempfile.mkdtemp())')
+#
+# workdir=/gpfs/scratch/aragaven/rstudio_test
+
+mkdir -p -m 700 ${workdir}/run ${workdir}/tmp ${workdir}/var/lib/rstudio-server
+cat > ${workdir}/database.conf <<END
+provider=sqlite
+directory=/var/lib/rstudio-server
+END
+
+# Set OMP_NUM_THREADS to prevent OpenBLAS (and any other OpenMP-enhanced
+# # libraries used by R) from spawning more threads than the number of processors
+# # allocated to the job.
+# #
+# # Set R_LIBS_USER to a path specific to rocker/rstudio to avoid conflicts with
+# # personal libraries from any R installation in the host environment
+#
+cat > ${workdir}/rsession.sh <<END
+#!/bin/sh
+export OMP_NUM_THREADS=${SLURM_JOB_CPUS_PER_NODE}
+export R_LIBS_USER=$r_package_path
+exec rsession "\${@}"
+END
+
+chmod +x ${workdir}/rsession.sh
+<%- if context.r_package_path.blank? -%>
+export SINGULARITY_BIND="${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
+<%- else -%>
+export SINGULARITY_BIND="${r_package_path}:/opt/R/site-library,${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
+<%- end -%>
+
+#export SINGULARITY_BIND="${r_package_path}:/usr/local/lib/R/site-library,${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
+# Add data paths from use
+<%- if context.additional_data_path.blank? -%>
+export SINGULARITY_BINDPATH="/gpfs/scratch/$USER,/users/$USER"
+<%- else -%>
+add_path=$(echo "<%= context.additional_data_path %>" |  xargs) 
+export SINGULARITY_BINDPATH="${add_path},/gpfs/scratch/$USER,/users/$USER"
+<%- end -%>
+# Do not suspend idle sessions.
+# # Alternative to setting session-timeout-minutes=0 in /etc/rstudio/rsession.conf
+# # https://github.com/rstudio/rstudio/blob/v1.4.1106/src/cpp/server/ServerSessionManager.cpp#L126
+export SINGULARITYENV_RSTUDIO_SESSION_TIMEOUT=0
+
+export SINGULARITYENV_USER=$(id -un)
+export SINGULARITYENV_PASSWORD="password"
+singularity exec --cleanenv $r_singularity_path \
+    rserver --www-port "${port}" \
+            --server-user="${USER}" \
+            --auth-none=1 \
+            --www-same-site="none" \
+            --auth-stay-signed-in-days=30 \
+            --auth-timeout-minutes=0 \
+            --rsession-path=/etc/rstudio/rsession.sh
+printf 'rserver exited' 1>&2
+            # --auth-pam-helper-path=pam-helper \
+rm -rvf $workdir/run 
+rm -rvf $workdir/tmp
+rm -rvf $workdir/var/lib/rstudio-server
+rm -rv $workdir/database.conf
+rm -rv $workdir/rsession.sh
+

@@ -28,10 +28,10 @@ script:
     - "-c"
     - "<%= num_cores %>" 
     - "-n"
-    - "1" 
-    <%- if partition == "gpu"  or partition == "gpu-he" -%>
+    - "1"
+    <% if (["gpu", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "gcondo" ].include?(bc_queue)) %>
     - "--gres=gpu:<%= gpu_count %>"
-    <%- end -%> 
+    <%- end -%>
     <%- if memtask != "default" -%>
     - "--mem"
     - "<%= memtask %>"

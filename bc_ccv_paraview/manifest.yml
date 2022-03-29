@@ -1,7 +1,7 @@
 ---
 name: ParaView
 category: Interactive Apps
-subcategory: GUIs
+subcategory: Default GUIs
 role: batch_connect
 description: |
   This app will launch a [ParaView] GUI on the [Oscar] using a **shared
