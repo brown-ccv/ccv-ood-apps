@@ -29,10 +29,11 @@ script:
     - "<%= num_cores %>" 
     - "-n"
     - "1"
-    <% if (["gpu", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "gcondo" ].include?(bc_queue)) %>
+    <%- if (["gpu", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "gcondo" ].include?(bc_queue)) -%>
     - "--gres=gpu:<%= gpu_count %>"
     <%- end -%>
     <%- if memtask != "default" -%>
-    - "--mem"
-    - "<%= memtask %>"
+    - "--mem=<%= memtask %>"
+    >%- else -%>
+    - "--mem=2.8G"
     <%- end -%> 
