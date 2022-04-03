@@ -29,6 +29,12 @@
 # Export the module function if it exists
 [[ $(type -t module) == "function" ]] && export -f module
 
+if [[ -f "${HOME}/.zshrc" ]]
+ then
+   echo "Using workaround for Z Shell";
+   SLURM_EXPORT_ENV=“ALL” ;
+  fi
+
 # Move the default kernel folder for the user
 mv $HOME/.local/share/jupyter/kernels $HOME/.local/share/jupyter/kernels.bak 
 
