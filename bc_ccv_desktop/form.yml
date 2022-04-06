@@ -33,7 +33,8 @@ attributes:
     value: "vnc"
   bc_num_slots: 1
   #x_module: "xfce/4.12"
-  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
+  #x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
+  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.10"
   num_cores:
     value: 1
     widget: "number_field"

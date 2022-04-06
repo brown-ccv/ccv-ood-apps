@@ -13,8 +13,8 @@ fi
 PANEL_CONFIG="${XDG_CONFIG_HOME}/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 if [[ ! -e "${PANEL_CONFIG}" ]]; then
   mkdir -p "$(dirname "${PANEL_CONFIG}")"
-  cp "/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
-  #cp "/gpfs/runtime/opt/xfce/4.16/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
+  #cp "/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
+  cp "/gpfs/runtime/opt/xfce/4.10/etc/xdg/xfce4/panel/default.xml" "${PANEL_CONFIG}"
 fi
 
 # Disable startup services
