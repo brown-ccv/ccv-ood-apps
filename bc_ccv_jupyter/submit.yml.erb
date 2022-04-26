@@ -34,6 +34,6 @@ script:
     <%- end -%>
     <%- if memtask != "default" -%>
     - "--mem=<%= memtask %>"
-    >%- else -%>
-    - "--mem=2.8G"
+    <%- else -%>
+    - "--mem=2G"
     <%- end -%> 
