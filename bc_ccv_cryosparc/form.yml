@@ -1,0 +1,29 @@
+---
+cluster: "ood_oscar"
+form:
+  - bc_queue
+  - bc_num_hours
+  - bc_num_slots
+  - num_cores
+  - sh_mem
+  - cryosparc_license
+  - bc_email_on_started
+attributes:
+  bc_num_slots: 1
+  bc_queue:
+    value: ""
+    label: "Partition"
+    help: "You can leave this blank if you are **not** using the default, else select the partition here"
+  num_cores:
+    value: 1
+    widget: "number_field"
+    help: "Indicate the number of cores you need. The default is 1"
+  sh_mem:
+    label: "Memory (GB) (optional)"
+    widget: "number_field"
+    help: "<small>Amount of memory to allocate</small>"
+    value: 4
+  cryosparc_license:
+    value: ""
+    required: true
+    help: "You cannot leave this blank as app will not run without it. This is the license you received from Structura."

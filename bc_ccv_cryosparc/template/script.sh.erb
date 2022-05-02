@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+#######################################
+# Environmental variables for install 
+#######################################
+
+# Note: some things are hardcoded, will change later 
+
+echo "Starting the main script now..."
+#echo $port
+
+# where to install cryosparc and its sample database 
+export install_path="/users/jlawson9/software/cryosparc"
+
+# Move folders needed to install 
+
+# the license ID you got from Structura (check email - hardcoded for now)
+export license_id=f673b6ca-c5a1-11ec-9109-9faffe02bc57
+
+# your email
+export my_email=jordan_lawson@brown.edu
+
+# your username
+export my_name=${USER}
+
+# a temp password
+export cryosparc_passwd=Password123
+
+# slurm partition to submit your cryosparc jobs to
+# not sure you can change at runtime?
+partition=g
+
+# More directories 
+export db_path=${HOME}/database
+export worker_path=${install_path}/cryosparc_worker
+export ssd_path=/tmp/${USER}/cryosparc_cache
+
+############
+# Install 
+############
+
+# load CUDA
+module load gcc/8.3
+module load cuda/10.2  
+
+#mkdir -p $install_path
+
+# Master
+cd ${install_path}/cryosparc_master
+./install.sh --license $license_id \
+    --hostname $(hostname) \
+    --dbpath $db_path \ 
+    --yes
+
+# Worker
+cd ${install_path}/cryosparc_worker
+./install.sh --license $license_id \
+    --cudapath $CUDA_HOME \
+    --yes
+
+# Add bin to path 
+export PATH="${install_path}/cryosparc_master/bin:$PATH"
+
+# Change config.sh file 
+export master_host=$(hostname)
+export base_dir=$(dirname "$(dirname "$(which cryosparcm)")")
+sed -i.bak 's/export CRYOSPARC_MASTER_HOSTNAME.*$/export CRYOSPARC_MASTER_HOSTNAME=\"'"$master_host"'\"/g' $base_dir/config.sh
+sed -i.bak 's/export CRYOSPARC_DB_PATH.*$/export CRYOSPARC_DB_PATH=$HOME\/database/g' $base_dir/config.sh
+sed -i.bak 's/export CRYOSPARC_BASE_PORT.*$/export CRYOSPARC_BASE_PORT=39000/g' $base_dir/config.sh
+# Need to edit this later (change to if so it doesn't keep appending)
+echo "export CRYOSPARC_FORCE_HOSTNAME=true" >> $base_dir/config.sh
+cat $base_dir/config.sh 
+#source $base_dir/config.sh
+
+#######
+# Run
+#######
+
+# Starts service  
+#mkdir -p /tmp/${USER}/cryosparc_cache 
+cryosparcm start
+#cryosparcm status
+#xdg-open https://$(hostname):39006
+
+# If database error, remove lock files 
+# rm -f $CRYOSPARC_DB_PATH/WiredTiger.lock $CRYOSPARC_DB_PATH/mongod.lock
