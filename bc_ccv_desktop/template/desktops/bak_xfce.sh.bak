@@ -1,5 +1,32 @@
 # Remove any preconfigured monitors
+#export VGLISACTIVE="yes"
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+unset XDG_SESSION_TYPE
+XDG_SESSION_TYPE=x11 
+export XDG_SESSION_TYPE
+export TVNC_VGL=1
 
+#if [ "$TVNC_WM" = "" ]; then
+#  # Typical system-wide WM startup script on Linux and Solaris 11
+#  if [ -f /etc/X11/xinit/xinitrc ]; then
+#    TVNC_WM=/etc/X11/xinit/xinitrc
+#  fi
+#fi
+
+export TVNC_WM=/gpfs/runtime/nvidia/cave-X11/xinit/xinitrc-cave
+
+#export TVNC_WM
+#if [ "$TVNC_VGL" = "1" ]; then
+#  if [ -z "$SSH_AGENT_PID" -a -x /usr/bin/ssh-agent ]; then
+#    TVNC_SSHAGENT=/usr/bin/ssh-agent
+#  fi
+#  if [ -z "$TVNC_VGLRUN" ]; then
+#    TVNC_VGLRUN="vglrun +wm"
+#  fi
+#fi
+
+#export TVNC_VGLRUN
 mkdir -p ${HOME}/.ood_config_vgl
 
 export XDG_CONFIG_HOME="${HOME}/.ood_config_vgl"
@@ -43,6 +70,13 @@ else
     "${TERM_CONFIG}"
 fi
 
+#export DISPLAY=`hostname`"$DISPLAY"
+#if [ "$TVNC_WM" != "" ]; then
+#  if [ -x "$TVNC_WM" ]; then
+#    exec $TVNC_SSHAGENT $TVNC_VGLRUN "$TVNC_WM"
+#  fi
+#fi
 # Start up xfce desktop (block until user logs out of desktop)
-#xfce4-session
-vglrun xfce4-session
+xfce4-session
+#vglrun xfce4-session
+#LD_PRELOAD="/gpfs/runtime/opt/virtualgl/2.5.1/lib/libdlfaker.so:/gpfs/runtime/opt/virtualgl/2.5.1/lib/libvglfaker.so" vglrun xfce4-session
