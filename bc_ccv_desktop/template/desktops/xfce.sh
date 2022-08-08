@@ -1,5 +1,6 @@
 # Remove any preconfigured monitors
 
+
 mkdir -p ${HOME}/.ood_config_vgl
 
 export XDG_CONFIG_HOME="${HOME}/.ood_config_vgl"
@@ -45,4 +46,6 @@ fi
 
 # Start up xfce desktop (block until user logs out of desktop)
 #xfce4-session
+##START only for GPU SESSION
 vglrun xfce4-session
+##END
