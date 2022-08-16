@@ -17,6 +17,7 @@ form:
   - num_cores
   - num_gpus
   - sh_mem
+  - reservation
   - bc_email_on_started
 attributes:
   bc_vnc_args: "-vgl"
@@ -48,3 +49,8 @@ attributes:
     widget: "number_field"
     help: "<small>Amount of memory to allocate</small>"
     value: 4
+  reservation:
+    widget: "text_field"
+    value: ""
+    label: "Reservation"
+    help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
