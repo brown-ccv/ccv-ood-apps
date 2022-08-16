@@ -36,4 +36,8 @@ script:
     - "--mem=<%= memtask %>"
     <%- else -%>
     - "--mem=2G"
-    <%- end -%> 
+    <%- end -%>
+    <%- if reservation.length >0  -%>
+    - "--reservation=<%= reservation %>"
+    <%- end -%>
+ 

@@ -18,7 +18,10 @@ script:
           "--constraint=gpu",
           <%- end %>
           <%- end %>
-          "--mem=<%= sh_mem %>GB"
+          "--mem=<%= sh_mem %>GB",
+          <%- if reservation.length >0  -%>
+          "--reservation=<%= reservation %>"
+          <%- end -%>
           ]
 #script:
 #  native: ["-w" , "node452"]

@@ -45,6 +45,11 @@ attributes:
       - **512M** - Use 512 MB.
       - **128G** - Use 128 GB.
   x_module: "xfce/4.12"
+  reservation:
+    widget: "text_field"
+    value: ""
+    label: "Reservation"
+    help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
   #x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
 form:
   - version
@@ -53,6 +58,7 @@ form:
   - memtask
   - bc_account
   - bc_queue
+  - reservation
   - bc_vnc_resolution
   - bc_email_on_started
   - x_module
