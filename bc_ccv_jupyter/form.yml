@@ -20,6 +20,7 @@ attributes:
     options:
       - [ "anaconda/2-4.3.0", "anaconda/2-4.3.0"]
       - [ "anaconda/2020.02" , "anaconda/2020.02"]
+      - [ "anaconda/2022.05" , "anaconda/2022.05"]
       - [ "anaconda/3-5.2.0" , "anaconda/3-5.2.0"]
       - [ "anaconda/2-5.3.0" , "anaconda/2-5.3.0"]
       - [ " anaconda/3-4.3.0", "anaconda/3-4.3.0"]
