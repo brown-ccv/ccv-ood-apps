@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+echo "PRINT PATH"
+echo $PATH
+# Change working directory to user's home directory
+cd "${HOME}"
+
+# Reset module environment (may require login shell for some HPC clusters)
+#module purge && module restore
+
+##START ONLY for GPU Session
+if [[ <%= context.session%> == "gpu"* ]];
+then
+module load perl/5.24.1 ood_virtualgl/2.5.1
+fi
+##END
+module load <%= context.x_module %>
+
+# Ensure that the user's configured login shell is used
+export SHELL="$(getent passwd $USER | cut -d: -f7)"
+
+unset DBUS_SESSION_BUS_ADDRESS
+##START ONLY for GPU Session
+if [[ <%= context.session%> == "gpu"* ]];
+then
+unset SESSION_MANAGER
+unset XDG_SESSION_TYPE
+XDG_SESSION_TYPE=x11
+export XDG_SESSION_TYPE
+export TVNC_ALRALL=1
+export TVNC_VGL=1
+IFS="," read -ra DISP <<< "$SLURM_JOB_GPUS"
+export VGL_DISPLAY=`hostname`:0.${DISP[0]}
+fi
+##END
+# Start up desktop
+echo "Launching desktop '<%= context.desktop %>'..."
+source "<%= session.staged_root.join("desktops", "#{context.desktop}.sh") %>"
+echo "Desktop '<%= context.desktop %>' ended..."
