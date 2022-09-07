@@ -1,9 +1,8 @@
 # Remove any preconfigured monitors
 
+mkdir -p ${HOME}/.ood_config
 
-mkdir -p ${HOME}/.ood_config_vgl
-
-export XDG_CONFIG_HOME="${HOME}/.ood_config_vgl"
+export XDG_CONFIG_HOME="${HOME}/.ood_config"
 
 if [[ -f "${XDG_CONFIG_HOME}/monitors.xml" ]]; then
   mv "${XDG_CONFIG_HOME}/monitors.xml" "${XDG_CONFIG_HOME}/monitors.xml.bak"
@@ -45,7 +44,14 @@ else
 fi
 
 # Start up xfce desktop (block until user logs out of desktop)
-#xfce4-session
+if [[ "<%= context.session %>" == "cpu"* ]];
+then
+xfce4-session
+fi
 ##START only for GPU SESSION
+
+if [[ "<%= context.session %>" == "gpu"* ]];
+then
 vglrun xfce4-session
+fi
 ##END

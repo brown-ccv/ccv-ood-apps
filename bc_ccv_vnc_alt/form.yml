@@ -1,0 +1,39 @@
+---
+# **MUST** set cluster id here that matches cluster configuration file located
+# under /etc/ood/config/clusters.d/*.yml
+# @example Use the Owens cluster at Ohio Supercomputer Center
+#     cluster: "owens"
+cluster: "ood_oscar"
+form:
+  - session
+  - bc_vnc_idle
+  - bc_vnc_resolution
+  - x_module
+  - desktop
+attributes:
+  session:
+    widget: select
+    label : "Resources and Time"
+    help : "Please choose the resource you would like for this VNC session. Please note that the duration of your VNC session is dependent on how much memory and cores you request:"
+    options:
+      - [ "2 Cores, 7GB Memory, 1 week", "cpu1" ]
+      - [ "4 Cores, 15GB Memory, 4 days", "cpu2" ]
+      - [ "6 Cores, 20GB Memory, 3 days", "cpu3" ]
+      - [ "8 Cores, 30GB Memory, 2 days", "cpu4" ]
+      - [ "2 Cores, 7GB Memory, 1 GPU, 4 days", "gpu1" ]
+      - [ "3 Cores, 15GB Memory, 2 GPUs, 2 days", "gpu2" ]
+  desktop: "xfce"
+  # hardcoding XFCE as the environment 
+  bc_vnc_idle: 0
+  bc_vnc_resolution:
+    required: true
+  bc_account:
+    help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
+  sh_queue:
+    label: "partition"
+    help: "By Default this runs on the **VNC** Queue. you can run it with a gpu priority queue if you have one"
+    widget: "text_field"
+    value: "vnc"
+  bc_num_slots: 1
+  #x_module: "xfce/4.12"
+  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"

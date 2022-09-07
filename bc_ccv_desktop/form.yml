@@ -21,7 +21,9 @@ form:
   - bc_email_on_started
 attributes:
   bc_vnc_args: "-vgl"
-  desktop: "xfce"
+  desktop: 
+    widget: "text_field"
+    value: "xfce"
   bc_vnc_idle: 0
   bc_vnc_resolution:
     required: true
@@ -29,13 +31,12 @@ attributes:
     help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
   sh_queue:
     label: "partition"
-    help: "By Default this runs on the **batch** Queue. you can run it with a gpu priority queue if you have one"
+    help: "By Default this runs on the **VNC** Queue. you can run it with a gpu priority queue if you have one"
     widget: "text_field"
-    value: "batch"
+    value: "vnc"
   bc_num_slots: 1
   #x_module: "xfce/4.12"
-  #x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
-  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_ood"
+  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
   num_cores:
     value: 1
     widget: "number_field"
