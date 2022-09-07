@@ -1,8 +1,8 @@
 ---
-name: Desktop
+name: Desktop (Advanced)
 icon: fa://desktop
 category: Interactive Apps
-subcategory: Default GUIs
+subcategory: Expert GUIs
 role: batch_connect
 description: |
   This app will launch an interactive desktop on one or more compute nodes. You
