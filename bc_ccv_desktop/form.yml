@@ -21,9 +21,10 @@ form:
   - bc_email_on_started
 attributes:
   bc_vnc_args: "-vgl"
-  desktop: 
+  desktop:
     widget: "text_field"
     value: "xfce"
+    help: "Enter xfce. Do not change this field if it says xfce"
   bc_vnc_idle: 0
   bc_vnc_resolution:
     required: true
@@ -36,7 +37,7 @@ attributes:
     value: "vnc"
   bc_num_slots: 1
   #x_module: "xfce/4.12"
-  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
+  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_ood"
   num_cores:
     value: 1
     widget: "number_field"
