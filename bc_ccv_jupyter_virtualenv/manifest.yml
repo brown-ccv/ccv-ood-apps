@@ -1,0 +1,7 @@
+---
+name: Jupyter Notebook for Python Environments
+category: Interactive Apps
+subcategory: Default GUIs
+role: batch_connect
+description: |
+  This app will allow you to launch a Jupyter Notebook server on one node. Use this application if you are using python virtual environments  <div class="alert alert-danger" role="alert"> You will **NOT** be able to use this app if you do not specify a Python Virtual Environment. Use "Jupyter Notebooks with Anaconda" app instead</div>

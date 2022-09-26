@@ -1,7 +1,7 @@
 ---
-name: Basic Jupyter Notebook
+name: Basic Jupyter Notebook with Anaconda
 category: Interactive Apps
 subcategory: Default GUIs
 role: batch_connect
 description: |
-  This app will allow you to launch a Jupyter Notebook server on one node. Use this application if you are using the anaconda modules provided on OSCAR <div class="alert alert-danger" role="alert">THIS APP IS STILL IN BETA</div>.
+  This app will allow you to launch a Jupyter Notebook server on one node. Use this application if you are using the anaconda modules provided on OSCAR. To use the Python virtual environments, use the other app "Jupyter Notebook for Python Environments" <div class="alert alert-danger" role="alert">THIS APP IS STILL IN BETA</div>.
