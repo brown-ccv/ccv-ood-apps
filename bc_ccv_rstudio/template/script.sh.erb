@@ -14,21 +14,9 @@ module load <%= context.r_module %>
 # Load the require modules
 module load <%= context.modules %>
 <%- end -%>
-setup_env () {
   # Additional environment which could be moved into a module
   # Change these to suit
-  #export RSTUDIO_SERVER_IMAGE="/users/aragaven/ood_local_install/singularity_container/rserver-launcher-centos7.simg"
-  #export SINGULARITY_BINDPATH="/etc,/media,/mnt,/opt,/srv,/usr,/var"
-  export PATH="$PATH:/gpfs/runtime/opt/ood_system/rstudio-server/bin"
-  #:/usr/lib/rstudio-server/bin"
-  # export SINGULARITYENV_PATH="$PATH"
-  # export SINGULARITYENV_TZ="America/New_York"
-  # In Singularity 3.5.x it became necessary to explicitly pass LD_LIBRARY_PATH
-  # to the singularity process
-  #export SINGULARITYENV_LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64"
-  #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64"
-}
-setup_env
+  # export PATH="$PATH:/gpfs/runtime/opt/ood_system/rstudio_server2022/usr/lib/rstudio-server/bin/"
 
 echo "Printing PATH"
 echo $PATH
@@ -38,17 +26,19 @@ echo $PATH
 
 # PAM auth helper used by RStudio
 export RSTUDIO_AUTH="${PWD}/bin/auth"
-
+export tmp_path=$PWD
 # Generate an `rsession` wrapper script
 export RSESSION_WRAPPER_FILE="${PWD}/rsession.sh"
 (
 umask 077
 sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
   #!/usr/bin/env bash
-  module load <%= context.r_module %>
-  # module load R/3.5.2
-  export PATH="$PATH:/usr/lib/rstudio-server/bin"
-  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64"
+  echo " this is PWD"
+  echo $PWD
+  #module load <%= context.r_module %>
+  #export PATH="$PATH:/usr/lib/rstudio-server/bin"
+  #export PATH="$PATH:/gpfs/runtime/opt/ood_system/rstudio_server2022/usr/lib/rstudio-server/bin/"
+  #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64:/gpfs/runtime/opt/ood_system/postgres_libs/usr/lib64"
   # Log all output from this script
   export RSESSION_LOG_FILE="${PWD}/rsession.log"
 
@@ -57,7 +47,8 @@ sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
   # Launch the original command
   echo "Launching rsession..."
   set -x
-  exec rsession --r-libs-user "${R_LIBS_USER}" "\${@}"
+  echo `which rsession`
+  exec /usr/lib/rstudio-server/bin/rsession --r-libs-user "${R_LIBS_USER}" "\${@}"
 EOL
 )
 chmod 700 "${RSESSION_WRAPPER_FILE}"
@@ -74,11 +65,21 @@ chmod 0600 "$TMPDIR/rstudio-server/secure-cookie-key"
 set -x
 # Launch the RStudio Server
 echo "Starting up rserver..."
+echo `which rserver`
 
-rserver --www-port "${port}" \
- --auth-none 0 --auth-pam-helper-path "${RSTUDIO_AUTH}" \
- --auth-encrypt-password 0 --rsession-path "${RSESSION_WRAPPER_FILE}" \
- --server-data-dir /tmp
+mkdir "$tmp_path/run" 
+mkdir "$tmp_path/var-lib-rstudio-server"
+printf 'provider=sqlite\ndirectory=/var/lib/rstudio-server\n' > $tmp_path/database.conf
+
+SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
+ --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf \
+ /gpfs/runtime/opt/ood_system/rstudio_server2022/rstudio_4.2.sif /usr/lib/rstudio-server/bin/rserver  --www-port "${port}" \
+ --auth-none 1 \
+ --auth-encrypt-password 0 \
+ --rsession-path "${RSESSION_WRAPPER_FILE}" \
+ --server-data-dir /tmp --server-working-dir /tmp \
+ --server-user $USER
+ #--auth-pam-helper-path "${RSTUDIO_AUTH}" \
 
 #singularity run -B "$TMPDIR:/tmp" "$RSTUDIO_SERVER_IMAGE" \
 # --www-port "${port}" --auth-none 1  --auth-pam-helper-path "${RSTUDIO_AUTH}" \
