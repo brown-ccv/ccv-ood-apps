@@ -32,9 +32,15 @@ attributes:
     help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
   sh_queue:
     label: "partition"
-    help: "By Default this runs on the **VNC** Queue. you can run it with a gpu priority queue if you have one"
-    widget: "text_field"
-    value: "vnc"
+    help: "Choose the partition to run this job"
+    widget: select
+    options:
+      - [ "batch", "batch" ]
+      - [ "gpu","gpu" ]
+      - [ "bigmem","bigmem" ]
+      - [ "debug", "debug" ]
+      - [ "gpu-debug","gpu-debug" ]
+      - [ "gpu-he","gpu-he" ]
   bc_num_slots: 1
   #x_module: "xfce/4.12"
   x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_ood"
