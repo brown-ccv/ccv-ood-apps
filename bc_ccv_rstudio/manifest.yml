@@ -4,4 +4,4 @@ category: Interactive Apps
 subcategory: Default GUIs
 role: batch_connect
 description: |
-  This app will launch an RStudio server on one or more nodes.<div class="alert alert-danger" role="alert">THIS APP IS STILL IN BETA report any issues to support@ccv.brown.edu</div>
+  This app will launch an RStudio server on one or more nodes.

@@ -4,4 +4,4 @@ category: Interactive Apps
 subcategory: Default GUIs
 role: batch_connect
 description: |
-  This app will allow you to launch a Jupyter Notebook server on one node. Use this application if you are using the anaconda modules provided on OSCAR. To use the Python virtual environments, use the other app "Jupyter Notebook for Python Environments" <div class="alert alert-danger" role="alert">THIS APP IS STILL IN BETA</div>.
+  This app will allow you to launch a Jupyter Notebook server on one node. Use this application if you are using the anaconda modules provided on OSCAR. To use the Python virtual environments, use the other app <a href="https://ood.ccv.brown.edu/pun/sys/dashboard/batch_connect/sys/bc_ccv_jupyter_virtualenv/session_contexts/new">Jupyter Notebook for Python Environments</a> 

@@ -7,4 +7,4 @@ role: batch_connect
 description: |
   This app will launch an interactive desktop on one or more compute nodes. You
   will have full access to the resources these nodes provide. This is analogous
-  to an interactive batch job. The resource options are similar to the VNC Java Client<div class="alert alert-danger" role="alert">THIS APP IS STILL IN BETA</div>
+  to an interactive batch job. The resource options are similar to the VNC Java Client.
