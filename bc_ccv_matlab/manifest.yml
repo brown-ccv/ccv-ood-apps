@@ -5,7 +5,7 @@ subcategory: Default GUIs
 role: batch_connect
 description: |
   This app will launch a [MATLAB] GUI on the [OSCAR] cluster. You will be able
-  to interact with the MATLAB GUI through a VNC session.<div class="alert alert-danger" role="alert">THIS APP IS STILL IN BETA report any issues to support@ccv.brown.edu</div>
+  to interact with the MATLAB GUI through a VNC session.
 
   [MATLAB]: https://www.mathworks.com/products/matlab.html
   [OSCAR]: https://docs.ccv.brown.edu

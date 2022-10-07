@@ -26,7 +26,7 @@ attributes:
       - [ " anaconda/3-4.3.0", "anaconda/3-4.3.0"]
   conda_env:
     value: ""
-    help: "Type in the specific conda environment you want to launch the Jupyer notebook from. If you want you can choose the environment from the Jupyter interface instead presuming you have Jupyter installed in the base environment. You **will** need to provide this if Jupyter is only installed in a particular environment. The is the argument to `conda active myenv`. You would only put in `myenv` here. "
+    help: "Type in the specific conda environment you want to launch the Jupyer notebook from. If you want you can choose the environment from the Jupyter interface instead presuming you have Jupyter installed in the base environment. You **will** need to provide this if Jupyter is only installed in a particular environment. The is the argument to `conda activate myenv`. You would only put in `myenv` here. "
   extra_jupyter_args:
     value: ""
     help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
