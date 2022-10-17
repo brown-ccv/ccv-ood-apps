@@ -4,12 +4,12 @@ batch_connect:
 script:
   native: [ 
           "-N 1",
-          <%- if session == "cpu1" -%> "-c 2", <%- end -%>
-          <%- if session == "cpu2" -%> "-c 4", <%- end -%>
-          <%- if session == "cpu3" -%> "-c 6", <%- end -%>
-          <%- if session == "cpu4" -%> "-c 8", <%- end -%>
-          <%- if session == "gpu1" -%> "-c 2", <%- end -%>
-          <%- if session == "gpu2" -%> "-c 3", <%- end -%>
+          <%- if session == "cpu1" -%> "-n 2", <%- end -%>
+          <%- if session == "cpu2" -%> "-n 4", <%- end -%>
+          <%- if session == "cpu3" -%> "-n 6", <%- end -%>
+          <%- if session == "cpu4" -%> "-n 8", <%- end -%>
+          <%- if session == "gpu1" -%> "-n 2", <%- end -%>
+          <%- if session == "gpu2" -%> "-n 3", <%- end -%>
           
           <%- if session == "cpu1" -%> "--mem=7GB", <%- end -%>
           <%- if session == "cpu2" -%> "--mem=15GB", <%- end -%>
