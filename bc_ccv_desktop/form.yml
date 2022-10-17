@@ -51,7 +51,7 @@ attributes:
   num_gpus:
     value: 1
     widget: "number_field"
-    help: "Indicate the number of gpus you need. The default is 0 and the max allowed is 2 for the **VNC** queue"
+    help: "Indicate the number of gpus you need. A valid partition with GPUs need to be specified. Enter 0 for batch, debug or bigmem partitions. Entering 0 for gpu,gpu-debug and gpu-he partitions will result in job failure."
   sh_mem:
     label: "Memory (GB) (optional)"
     widget: "number_field"
