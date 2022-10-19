@@ -45,13 +45,22 @@ else
 fi
 
 # Start up xfce desktop (block until user logs out of desktop)
-if [[ <%= context.num_gpus %> -eq 0 ]]
+#if [[ <%= context.num_gpus %> -eq 0 ]]
+if [[ ! <%= context.sh_queue%> =~ "gpu"  ]] #Checks if the partition does not contain the string "gpu"
 then
 xfce4-session
 fi
 ##START only for GPU SESSION
-if [[ <%= context.num_gpus %> -gt 0 ]]
+#if [[ <%= context.num_gpus %> -gt 0 ]]
+if [[  <%= context.sh_queue%> =~ "gpu"  ]] #Checks if the partition contains the string "gpu"
+then
+if [[ <%= context.num_gpus%> -gt 0  ]]
 then
 vglrun xfce4-session
+else
+ echo "You cannot request zero GPUs on jobs to gpu partition" 1>&2
+ exit 1
 fi
+fi
+
 ##END

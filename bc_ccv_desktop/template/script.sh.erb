@@ -10,7 +10,8 @@ cd "${HOME}"
 
 ##START ONLY for GPU Session
 #module load perl/5.24.1 ood_virtualgl/2.5.1
-if [[ <%= context.num_gpus%> -gt 0  ]]
+#if [[ <%= context.num_gpus%> -gt 0  ]]
+if [[ <%= context.sh_queue%> =~ "gpu"  ]] && [[ <%= context.num_gpus%> -gt 0  ]] #Checks if the partition contains the string "gpu"
 then
 module load perl/5.24.1 virtualgl/3.0.1 libjpeg-turbo/2.0.2
 fi
@@ -22,7 +23,8 @@ export SHELL="$(getent passwd $USER | cut -d: -f7)"
 
 unset DBUS_SESSION_BUS_ADDRESS
 ##START ONLY for GPU Session
-if [[ <%= context.num_gpus%> -gt 0  ]]
+#if [[ <%= context.num_gpus%> -gt 0  ]]
+if [[ <%= context.sh_queue%> =~ "gpu"  ]] && [[ <%= context.num_gpus%> -gt 0  ]]  #Checks if the partition contains the string "gpu"
 then
 unset SESSION_MANAGER
 unset XDG_SESSION_TYPE

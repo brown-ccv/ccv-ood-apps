@@ -4,20 +4,11 @@ batch_connect:
 script:
   native: [
           "-N <%= bc_num_slots %>",
-          "-c <%= num_cores %>",
-          <%- if sh_queue == "vnc"  %>
+          "-n <%= num_cores %>",
           "--partition=<%= sh_queue %>",
-          "--qos=vnc",
-          <%- end %>
-          <%- if sh_queue == "gpu"  %>
-          "--partition=<%= sh_queue %>",
-          <%- end %>
-          <%- if num_gpus.to_i > 0 %>
+          <%- if sh_queue == "gpu" || sh_queue == "gpu-debug" || sh_queue == "gpu-he"  -%>
           "--gres=gpu:<%= num_gpus %>",
-          <%- if sh_queue == "vnc"  %>
-          "--constraint=gpu",
-          <%- end %>
-          <%- end %>
+          <%- end -%>
           "--mem=<%= sh_mem %>GB",
           <%- if reservation.length >0  -%>
           "--reservation=<%= reservation %>"
