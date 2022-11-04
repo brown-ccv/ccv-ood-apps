@@ -81,16 +81,36 @@ echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
  --rsession-path ${RSESSION_WRAPPER_FILE} \
  --server-data-dir /tmp --server-working-dir /tmp \
  --server-user ${USER} \
- --auth-pam-helper-path ${RSTUDIO_AUTH}" > $tmp_path/rstudio_run.sh
+ --auth-pam-helper-path ${RSTUDIO_AUTH}" > $tmp_path/rstudio_run_4.2.0.sh
+
+echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
+  ln -s /opt/lib/libicuuc.so.50.2 /opt/lib/libicuuc.so.50 || true ; \
+  ln -s /opt/lib/libicui18n.so.50.2 /opt/lib/libicui18n.so.50 || true;\
+  ln -s /opt/lib/libtinfo.so.5.9 /opt/lib/libtinfo.so.5 || true ; \
+  ln -s /opt/lib/libicudata.so.50.2 /opt/lib/libicudata.so.50 || true ; \
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib && /usr/lib/rstudio-server/bin/rserver --www-port ${port} \
+ --rsession-which-r $module_r_path \
+ --auth-none 1 \
+ --auth-encrypt-password 0 \
+ --rsession-path ${RSESSION_WRAPPER_FILE} \
+ --server-working-dir /tmp \
+ --server-user ${USER} \
+ --auth-pam-helper-path ${RSTUDIO_AUTH}" > $tmp_path/rstudio_run_3.6.3.sh
 
 echo "*********************"
 echo " THIS IS LD PATH"
 echo $LD_LIBRARY_PATH
 echo "*************************"
+<%- if context.r_module.include? "R/4" -%>
 
 SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
  --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,/gpfs/runtime/opt/ood_system/rstudio_server_sing/libs:/opt/lib,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
-  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_4.2.0.sif /bin/bash $tmp_path/rstudio_run.sh
+  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_4.2.0.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
+<%- else -%>
+SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
+ --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,/gpfs/runtime/opt/ood_system/rstudio_server_sing/libs:/opt/lib,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
+  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_3.6.3.sif /bin/bash $tmp_path/rstudio_run_3.6.3.sh
+<%- end -%>
 
 #SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
 # --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,/gpfs/runtime/opt/ood_system/rstudio_server_sing/libs:/opt/lib,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf \
