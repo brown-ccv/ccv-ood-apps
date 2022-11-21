@@ -14,21 +14,9 @@ module load <%= context.r_module %>
 # Load the require modules
 module load <%= context.modules %>
 <%- end -%>
-setup_env () {
   # Additional environment which could be moved into a module
   # Change these to suit
-  #export RSTUDIO_SERVER_IMAGE="/users/aragaven/ood_local_install/singularity_container/rserver-launcher-centos7.simg"
-  #export SINGULARITY_BINDPATH="/etc,/media,/mnt,/opt,/srv,/usr,/var"
-  export PATH="$PATH:/gpfs/runtime/opt/ood_system/rstudio-server/bin"
-  #:/usr/lib/rstudio-server/bin"
-  # export SINGULARITYENV_PATH="$PATH"
-  # export SINGULARITYENV_TZ="America/New_York"
-  # In Singularity 3.5.x it became necessary to explicitly pass LD_LIBRARY_PATH
-  # to the singularity process
-  #export SINGULARITYENV_LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64"
-  #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64"
-}
-setup_env
+  # export PATH="$PATH:/gpfs/runtime/opt/ood_system/rstudio_server2022/usr/lib/rstudio-server/bin/"
 
 echo "Printing PATH"
 echo $PATH
@@ -38,6 +26,7 @@ echo $PATH
 
 # PAM auth helper used by RStudio
 export RSTUDIO_AUTH="${PWD}/bin/auth"
+export tmp_path=$PWD
 
 # Generate an `rsession` wrapper script
 export RSESSION_WRAPPER_FILE="${PWD}/rsession.sh"
@@ -45,11 +34,8 @@ export RSESSION_WRAPPER_FILE="${PWD}/rsession.sh"
 umask 077
 sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
   #!/usr/bin/env bash
-  module load <%= context.r_module %>
-  # module load R/3.5.2
-  export PATH="$PATH:/usr/lib/rstudio-server/bin"
-  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/lib64"
-  # Log all output from this script
+  
+ # Log all output from this script
   export RSESSION_LOG_FILE="${PWD}/rsession.log"
 
   exec &>>"\${RSESSION_LOG_FILE}"
@@ -57,7 +43,7 @@ sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
   # Launch the original command
   echo "Launching rsession..."
   set -x
-  exec rsession --r-libs-user "${R_LIBS_USER}" "\${@}"
+  exec /usr/lib/rstudio-server/bin/rsession --r-libs-user "${R_LIBS_USER}" "\${@}"
 EOL
 )
 chmod 700 "${RSESSION_WRAPPER_FILE}"
@@ -74,15 +60,68 @@ chmod 0600 "$TMPDIR/rstudio-server/secure-cookie-key"
 set -x
 # Launch the RStudio Server
 echo "Starting up rserver..."
+echo `which rserver`
 
-rserver --www-port "${port}" \
- --auth-none 0 --auth-pam-helper-path "${RSTUDIO_AUTH}" \
- --auth-encrypt-password 0 --rsession-path "${RSESSION_WRAPPER_FILE}" \
- --server-data-dir /tmp
+mkdir "$tmp_path/run" 
+mkdir "$tmp_path/var-lib-rstudio-server"
+printf 'provider=sqlite\ndirectory=/var/lib/rstudio-server\n' > $tmp_path/database.conf
 
-#singularity run -B "$TMPDIR:/tmp" "$RSTUDIO_SERVER_IMAGE" \
-# --www-port "${port}" --auth-none 1  --auth-pam-helper-path "${RSTUDIO_AUTH}" \
-# --auth-encrypt-password 0  --rsession-path "${RSESSION_WRAPPER_FILE}" \
-# --server-data-dir /tmp
+module_r_path=`which R`
+
+
+echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
+  ln -s /opt/lib/libicuuc.so.50.2 /opt/lib/libicuuc.so.50 || true ; \
+  ln -s /opt/lib/libicui18n.so.50.2 /opt/lib/libicui18n.so.50 || true;\
+  ln -s /opt/lib/libtinfo.so.5.9 /opt/lib/libtinfo.so.5 || true ; \
+  ln -s /opt/lib/libicudata.so.50.2 /opt/lib/libicudata.so.50 || true ; \
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib && /usr/lib/rstudio-server/bin/rserver --www-port ${port} \
+ --rsession-which-r $module_r_path \
+ --auth-none 1 \
+ --auth-encrypt-password 0 \
+ --rsession-path ${RSESSION_WRAPPER_FILE} \
+ --server-data-dir /tmp --server-working-dir /tmp \
+ --server-user ${USER} \
+ --auth-pam-helper-path ${RSTUDIO_AUTH}" > $tmp_path/rstudio_run_4.2.0.sh
+
+echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
+  ln -s /opt/lib/libicuuc.so.50.2 /opt/lib/libicuuc.so.50 || true ; \
+  ln -s /opt/lib/libicui18n.so.50.2 /opt/lib/libicui18n.so.50 || true;\
+  ln -s /opt/lib/libtinfo.so.5.9 /opt/lib/libtinfo.so.5 || true ; \
+  ln -s /opt/lib/libicudata.so.50.2 /opt/lib/libicudata.so.50 || true ; \
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib && /usr/lib/rstudio-server/bin/rserver --www-port ${port} \
+ --rsession-which-r $module_r_path \
+ --auth-none 1 \
+ --auth-encrypt-password 0 \
+ --rsession-path ${RSESSION_WRAPPER_FILE} \
+ --server-working-dir /tmp \
+ --server-user ${USER} \
+ --auth-pam-helper-path ${RSTUDIO_AUTH}" > $tmp_path/rstudio_run_3.6.3.sh
+
+echo "*********************"
+echo " THIS IS LD PATH"
+echo $LD_LIBRARY_PATH
+echo "*************************"
+<%- if context.r_module.include? "R/4" -%>
+
+SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
+ --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,/gpfs/runtime/opt/ood_system/rstudio_server_sing/libs:/opt/lib,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
+  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_4.2.0.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
+<%- else -%>
+SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
+ --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,/gpfs/runtime/opt/ood_system/rstudio_server_sing/libs:/opt/lib,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
+  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_3.6.3.sif /bin/bash $tmp_path/rstudio_run_3.6.3.sh
+<%- end -%>
+
+#SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
+# --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,/gpfs/runtime/opt/ood_system/rstudio_server_sing/libs:/opt/lib,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf \
+#  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_4.2.0.sif \
+#  /usr/lib/rstudio-server/bin/rserver --www-port "${port}" \
+# --rsession-which-r $module_r_path \
+# --auth-none 1 \
+# --auth-encrypt-password 0 \
+#  --rsession-path "${RSESSION_WRAPPER_FILE}" \
+#  --server-data-dir /tmp --server-working-dir /tmp \
+#  --server-user $USER --auth-pam-helper-path "${RSTUDIO_AUTH}" 
+
 
 # echo 'Singularity has exited...'
