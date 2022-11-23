@@ -22,9 +22,12 @@ form:
 attributes:
   bc_vnc_args: "-vgl"
   desktop:
-    widget: "text_field"
-    value: "xfce"
-    help: "Enter xfce. Do not change this field if it says xfce"
+    widget: select
+    label: "Desktop Environment"
+    help: "Choose **xfce** unless you have been asked to use something else"
+    options:
+      - [ "xfce", "xfce" ]
+      - [ "kde", "kde" ]
   bc_vnc_idle: 0
   bc_vnc_resolution:
     required: true
@@ -43,7 +46,7 @@ attributes:
       - [ "gpu-he","gpu-he" ]
   bc_num_slots: 1
   #x_module: "xfce/4.12"
-  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_ood"
+  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_latest"
   num_cores:
     value: 1
     widget: "number_field"
