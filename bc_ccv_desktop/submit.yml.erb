@@ -6,7 +6,7 @@ script:
           "-N <%= bc_num_slots %>",
           "-n <%= num_cores %>",
           "--partition=<%= sh_queue %>",
-          <%- if sh_queue == "gpu" || sh_queue == "gpu-debug" || sh_queue == "gpu-he"  -%>
+          <%- if sh_queue =~ /gpu|gcondo/ -%>
           "--gres=gpu:<%= num_gpus %>",
           <%- end -%>
           "--mem=<%= sh_mem %>GB",

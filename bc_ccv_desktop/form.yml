@@ -44,6 +44,9 @@ attributes:
       - [ "debug", "debug" ]
       - [ "gpu-debug","gpu-debug" ]
       - [ "gpu-he","gpu-he" ]
+      - [ "3090-gcondo","3090-gcondo"]
+      - [ "a6000-gcondo","a6000-gcondo"]
+      - [ "gcondo","gcondo"]
   bc_num_slots: 1
   #x_module: "xfce/4.12"
   x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_latest"
