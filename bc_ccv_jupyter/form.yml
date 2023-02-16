@@ -65,8 +65,15 @@ attributes:
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
+  mode:
+    widget: "radio"
+    value: "0"
+    options:
+      - ["Jupyter Lab","1"]
+      - ["Jupyter Notebook","0"]
 form:
   - anaconda_module
+  - mode
   - conda_env
   - modules
   #- jupyterlab_switch
