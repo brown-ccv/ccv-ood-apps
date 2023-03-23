@@ -1,0 +1,15 @@
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+
+# Find available port to run server on
+port=$(find_port)
+
+# Export compute node the script is running on
+export host="${host}"
+
+# Generate SHA1 encrypted password (requires OpenSSL installed)
+SALT="$(create_passwd 16)"
+password="$(create_passwd 16)"
+PASSWORD_SHA1="$(echo -n "${password}${SALT}" | openssl dgst -sha1 | awk '{print $NF}')"
+
+# export code_server_version="<%= context.version %>"
