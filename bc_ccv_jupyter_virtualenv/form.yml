@@ -29,6 +29,7 @@ attributes:
       - [ " python_igraph/0.7.1 ", " python_igraph/0.7.1 "]
       - [ " python/3.5.2 ", " python/3.5.2 "]
       - [ " python/3.7.4 ", " python/3.7.4 "]
+      - [ " python/3.11.0 ", " python/3.11.0 openssl/3.0.0 "]
   virtualenv:
     widget: text_field
     label: "Python Virtual Environment"
