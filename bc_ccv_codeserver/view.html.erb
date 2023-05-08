@@ -1,9 +1,17 @@
-<form action="/rnode/<%= host %>/<%= port %>/auth-do-sign-in" method="post" target="_blank">
-  <input type="hidden" name="username" value="<%= ENV["USER"] %>">
-  <input type="hidden" name="password" value="<%= password %>">
-  <input type="hidden" name="staySignedIn" value="1">
-  <input type="hidden" name="appUri" value="">
+<%
+  require 'digest'
+  # Generate form id, based on host and port
+  form_id = Digest::SHA1.hexdigest("--" + host.to_s + "--" + port.to_s + "--")
+
+  # Generate SHA256 digest of Code Server Password
+  cookieValue = Digest::SHA256.hexdigest(password)
+%>
+
+
+
+
+<form id="<%= form_id %>" action="/rnode/<%= host %>/<%= port %>/" method="get" target="_blank">
   <button class="btn btn-primary" type="submit">
-    <i class="fa fa-registered"></i> Connect to RStudio Server
+    <i class="fa fa-registered"></i> Connect to VS Code
   </button>
 </form>
