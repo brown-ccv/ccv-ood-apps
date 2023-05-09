@@ -13,6 +13,8 @@ echo "TIMING - Starting main script at: $(date)"
 
 # Set working directory to home directory
 cd "${HOME}"
+# Expose the password to the server
+export PASSWORD="$password"
 
 #
 # Start VSCode Server
@@ -40,6 +42,5 @@ code-server \
     --auth="password" \
     --bind-addr="0.0.0.0:${port}" \
     --disable-telemetry \
-    --ignore-last-opened \
     --user-data-dir="$CODE_SERVER_DATAROOT" \
     --log debug 

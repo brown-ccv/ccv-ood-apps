@@ -4,14 +4,14 @@
   form_id = Digest::SHA1.hexdigest("--" + host.to_s + "--" + port.to_s + "--")
 
   # Generate SHA256 digest of Code Server Password
-  cookieValue = Digest::SHA256.hexdigest(password)
+  #cookieValue = Digest::SHA256.hexdigest(password)
 %>
 
 
 
-
-<form id="<%= form_id %>" action="/rnode/<%= host %>/<%= port %>/" method="get" target="_blank">
+<form id="<%= form_id %>" action="/rnode/<%= host %>/<%= port %>/login?to=" method="post" target="_blank">
+  <input type="hidden" name="password" value="<%= password %>" >
   <button class="btn btn-primary" type="submit">
-    <i class="fa fa-registered"></i> Connect to VS Code
+    <i class="fa fa-laptop-code"></i> Connect to VS Code
   </button>
 </form>
