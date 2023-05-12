@@ -18,6 +18,7 @@ form:
   - num_gpus
   - sh_mem
   - reservation
+  - features
   - bc_email_on_started
 attributes:
   bc_vnc_args: "-vgl"
@@ -69,3 +70,10 @@ attributes:
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
+
+    

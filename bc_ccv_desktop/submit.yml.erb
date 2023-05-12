@@ -13,6 +13,9 @@ script:
           <%- if reservation.length >0  -%>
           "--reservation=<%= reservation %>"
           <%- end -%>
+          <%- if features.length >0  -%>
+          "--constraint=<%= features %>"
+          <%- end -%>
           ]
 #script:
 #  native: ["-w" , "node452"]
