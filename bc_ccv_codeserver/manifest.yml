@@ -1,12 +1,11 @@
 ---
-name: VSCode
-# icon: fa://desktop
+name: Code Server (Visual Studio Code)
+##icon: fa://laptop-code
 category: Interactive Apps
-subcategory: Expert GUIs
+subcategory: Default GUIs
 role: batch_connect
 description: |
-  This app will launch a [VS Code] server using [Code Server] on the [Oscar
-  Cluster].
+  This app launches a [Code Server] on the  [Oscar Cluster]. [Code Server] leverages [VS Code] as its editor.
   [VS Code]: https://code.visualstudio.com/
-  [Code Server]: https://coder.com/
+  [Code Server]: https://coder.com/docs/code-server/latest
   [Oscar Cluster]: https://docs.ccv.brown.edu/oscar/

@@ -5,6 +5,13 @@ code_server_version=context.version
 CODE_SERVER_DATAROOT="$HOME/.local/share/code-server"
 mkdir -p "$CODE_SERVER_DATAROOT/extensions"
 
+if [ ! -s "${HOME}/.local/share/code-server/Machine/settings.json" ]
+    then
+    mkdir -p ${HOME}/.local/share/code-server/Machine
+    ln -s /gpfs/runtime/opt/vscode-server/ccv-vscode-config/settings.json \
+        ${HOME}/.local/share/code-server/Machine/settings.json
+fi
+
 echo " Print ENV "
 printenv | grep SLURM
 
@@ -29,7 +36,7 @@ module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
 module load <%=context.modules%>
 <%- end -%>
 
-module load code-server/4.11.0
+module load code-server/<%= context.version %>
 
 # Benchmark info
 # List loaded modules
