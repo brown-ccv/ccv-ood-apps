@@ -1,0 +1,11 @@
+---
+name: Code Server (Visual Studio Code)
+##icon: fa://laptop-code
+category: Interactive Apps
+subcategory: Default GUIs
+role: batch_connect
+description: |
+  This app launches a [Code Server] on the  [Oscar Cluster]. [Code Server] leverages [VS Code] as its editor.
+  [VS Code]: https://code.visualstudio.com/
+  [Code Server]: https://coder.com/docs/code-server/latest
+  [Oscar Cluster]: https://docs.ccv.brown.edu/oscar/
