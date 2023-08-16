@@ -25,9 +25,9 @@ batch_connect:
 #
 script:
   native:
-    - "-c"
-    - "<%= num_cores %>" 
     - "-n"
+    - "<%= num_cores %>" 
+    - "-N"
     - "1"
     <%- if (["gpu", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "gcondo" ].include?(bc_queue)) -%>
     - "--gres=gpu:<%= gpu_count %>"
@@ -40,4 +40,8 @@ script:
     <%- if reservation.length >0  -%>
     - "--reservation=<%= reservation %>"
     <%- end -%>
+    <%- if features.length >0  -%>
+    - "--constraint=<%= features %>"
+    <%- end -%>
+
  

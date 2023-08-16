@@ -65,6 +65,12 @@ attributes:
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
+
 form:
   - anaconda_module
   - conda_env
@@ -79,4 +85,5 @@ form:
   - reservation
   - bc_num_hours
   - bc_num_slots
+  - features
   - bc_email_on_started
