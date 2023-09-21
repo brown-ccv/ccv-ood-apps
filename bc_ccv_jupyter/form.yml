@@ -24,6 +24,7 @@ attributes:
       - [ "anaconda/3-5.2.0" , "anaconda/3-5.2.0"]
       - [ "anaconda/2-5.3.0" , "anaconda/2-5.3.0"]
       - [ " anaconda/3-4.3.0", "anaconda/3-4.3.0"]
+      - ["anaconda/2023.03-1", "anaconda/2023.03-1"]
   conda_env:
     value: ""
     help: "Type in the specific conda environment you want to launch the Jupyer notebook from. If you want you can choose the environment from the Jupyter interface instead presuming you have Jupyter installed in the base environment. You **will** need to provide this if Jupyter is only installed in a particular environment. The is the argument to `conda activate myenv`. You would only put in `myenv` here. "
