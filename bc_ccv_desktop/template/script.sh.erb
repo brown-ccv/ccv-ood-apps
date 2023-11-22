@@ -11,12 +11,12 @@ cd "${HOME}"
 ##START ONLY for GPU Session
 #module load perl/5.24.1 ood_virtualgl/2.5.1
 #if [[ <%= context.num_gpus%> -gt 0  ]]
-if [[ <%= context.sh_queue%> =~ (gpu|gcondo)  ]] && [[ <%= context.num_gpus%> -gt 0  ]] #Checks if the partition contains the string "gpu"
-then
-module load perl/5.24.1 virtualgl/3.0.1 libjpeg-turbo/2.0.2
-fi
+#if [[ <%= context.sh_queue%> =~ (gpu|gcondo)  ]] && [[ <%= context.num_gpus%> -gt 0  ]] #Checks if the partition contains the string "gpu"
+#then
+#module load perl/5.24.1 virtualgl/3.0.1 libjpeg-turbo/2.0.2
+#fi
 ##END
-module load <%= context.x_module %>
+#module load <%= context.x_module %>
 
 # Ensure that the user's configured login shell is used
 export SHELL="$(getent passwd $USER | cut -d: -f7)"

@@ -28,7 +28,8 @@ attributes:
     help: "Choose **xfce** unless you have been asked to use something else"
     options:
       - [ "xfce", "xfce" ]
-      - [ "kde", "kde" ]
+      - [ "kde", "kde" ] 
+      - [ "gnome", "gnome" ]
   bc_vnc_idle: 0
   bc_vnc_resolution:
     required: true
