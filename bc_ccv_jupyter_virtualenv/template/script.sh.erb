@@ -17,7 +17,7 @@ export XDG_RUNTIME_DIR=""
 # Start Jupyter Notebook Server
 #
 # load the required conda module
-#module load <%=context.python_module%>
+
 
 <%- unless context.virtualenv.blank? -%>
 source <%=context.virtualenv%>/bin/activate
@@ -26,8 +26,7 @@ source <%=context.virtualenv%>/bin/activate
 
 <%- unless context.modules.blank? -%>
 # Purge the module environment to avoid conflicts
-module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0 
-
+module purge
 # Load the require modules
 module load <%=context.modules%>
 
@@ -40,4 +39,4 @@ echo "TIMING - Starting jupyter at: $(date)"
 
 # Launch the Jupyter Notebook Server
 set -x
-jupyter-notebook --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>
+jupyter <%= context.mode == "1" ? "lab" : "notebook" %> --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>

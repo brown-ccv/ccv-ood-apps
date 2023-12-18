@@ -13,27 +13,10 @@ attributes:
   modules:
     value: ""
     help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
-  python_module:
-    widget: select
-    label: "Python Module on Oscar"
-    help: "Select the Python module used to create the Python virtual environment"
-    options:
-      - [ " python/2.7.12 ", " python/2.7.12 "]
-      - [ " python/3.6.6 ", " python/3.6.6 "]
-      - [ " python/3.8.12_gcc8.3 ", " python/3.8.12_gcc8.3 "]
-      - [ " python/2.7.12_clean ", " python/2.7.12_clean "]
-      - [ " python/3.6.6_test ", " python/3.6.6_test "]
-      - [ " python/3.9.0 ", " python/3.9.0 "]
-      - [ " python/2.7.16 ", " python/2.7.16 "]
-      - [ " python/3.6.8_gcc8.3 ", " python/3.6.8_gcc8.3 "]
-      - [ " python_igraph/0.7.1 ", " python_igraph/0.7.1 "]
-      - [ " python/3.5.2 ", " python/3.5.2 "]
-      - [ " python/3.7.4 ", " python/3.7.4 "]
-      - [ " python/3.11.0 ", " python/3.11.0 openssl/3.0.0 "]
   virtualenv:
     widget: text_field
     label: "Python Virtual Environment"
-    help: "<div class=\"alert alert-danger\" role=\"alert\">You cannot leave this blank. Jupyter Notebook **must** be installed in this environment.</div>Enter the full path of the Python virtual environment on Oscar. You can obtain this path by navigating to the location where the environment was installed and entering `pwd`. You **must** ensure that Jupyter notebook is installed in this environment. Typically you load this environment by running `source env_path/bin/activate`." 
+    help: "<div class=\"alert alert-danger\" role=\"alert\">You cannot leave this blank. Jupyter Notebook **must** be installed in this environment.</div>Enter the full path of the Python virtual environment on Oscar.This environment must be created with system Python on **RHEL/9.2** . You can obtain this path by navigating to the location where the environment was installed and entering `pwd`. You **must** ensure that Jupyter notebook is installed in this environment. Typically you load this environment by running `source env_path/bin/activate`." 
   extra_jupyter_args:
     value: ""
     help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
@@ -72,9 +55,15 @@ attributes:
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
+  mode:
+    widget: "radio"
+    value: "0"
+    options:
+      - ["Jupyter Lab","1"]
+      - ["Jupyter Notebook","0"]
 form:
-  - python_module
   - virtualenv
+  - mode
   - modules
   #- jupyterlab_switch
   - extra_jupyter_args
