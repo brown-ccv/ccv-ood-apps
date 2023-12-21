@@ -35,13 +35,5 @@ attributes:
     widget: select
     label: "R version"
     help: "This defines the version of R you want to load."
-    options: 
-      - [ "R 4.2.0", "R/4.2.0 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018 " ]
-      - [ "R 4.1.0", "R/4.1.0 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018 " ]
-      - [ "R 4.0.5", "R/4.0.5 gcc/10.2 pcre2/10.35 intel/2020.2 texlive/2018" ]
-      - [ "R 4.0.3", "R/4.0.3 pcre2/10.35 gcc/8.3" ]
-      - [ "R 4.0.0", "R/4.0.0 pcre2/10.35 " ]
-      - [ "R 3.6.3", "R/3.6.3" ]
-      - [ "R 3.6.0", "R/3.6.0" ]
-      - [ "R 3.5.2", "R/3.5.2" ]
-      - [ "R 3.4.4", "R/3.4.4" ]
+    options:
+      - [ "r/4.2.2" ]

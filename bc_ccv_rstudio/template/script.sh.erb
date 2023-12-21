@@ -104,13 +104,13 @@ echo "*************************"
 <%- if context.r_module.include? "R/4" -%>
 
 APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
- --bind /lrs,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
-  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_rhel7.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
+ --bind /lrs,/oscar/rt/9.2,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
+  /oscar/rt/9.2/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
   #/gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_4.2.0.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
 <%- else -%>
 APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
- --bind /lrs,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
-  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_rhel7.sif /bin/bash $tmp_path/rstudio_run_3.6.3.sh
+ --bind /lrs,/oscar/rt/9.2,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
+  /oscar/rt/9.2/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_3.6.3.sh
 <%- end -%>
 
 #SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
