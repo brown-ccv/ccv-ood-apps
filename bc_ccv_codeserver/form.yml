@@ -1,0 +1,81 @@
+---
+# **MUST** set cluster id here that matches cluster configuration file located
+# under /etc/ood/config/clusters.d/*.yml
+# @example Use the Owens cluster at Ohio Supercomputer Center
+#     cluster: "owens"
+cluster: "ood_oscar"
+form:
+  - bc_account
+  - modules
+  - version
+  # - desktop
+  # - bc_vnc_idle
+  # - bc_vnc_args
+  - bc_num_hours
+  - bc_num_slots
+  # - bc_vnc_resolution
+  # - x_module
+  - sh_queue
+  - num_cores
+  - num_gpus
+  - sh_mem
+  - reservation
+  - bc_email_on_started
+attributes:
+  bc_vnc_args: "-vgl"
+  # desktop:
+  #   widget: select
+  #   label: "Desktop Environment"
+  #   help: "Choose **xfce** unless you have been asked to use something else"
+  #   options:
+  #     - [ "xfce", "xfce" ]
+  #     - [ "kde", "kde" ]
+  # bc_vnc_idle: 0
+  # bc_vnc_resolution:
+  #   required: true
+  bc_account:
+    help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
+  modules:
+    value: ""
+    help: "You can leave this blank if you are not loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple modules use: `abc/12.3  python/2.7` "
+  version:
+    widget: "select"
+    label: "Codeserver Version"
+    options:
+      - ["4.20.0", "4.20.0"]
+  sh_queue:
+    label: "partition"
+    help: "Choose the partition to run this job"
+    widget: select
+    options:
+      - [ "batch", "batch" ]
+      - [ "gpu","gpu" ]
+      - [ "bigmem","bigmem" ]
+      - [ "debug", "debug" ]
+      - [ "gpu-debug","gpu-debug" ]
+      - [ "gpu-he","gpu-he" ]
+      - [ "3090-gcondo","3090-gcondo"]
+      - [ "a6000-gcondo","a6000-gcondo"]
+      - [ "gcondo","gcondo"]
+      - [ "gpu-condo","gpu-condo"]
+  bc_num_slots: 1
+  #x_module: "xfce/4.12"
+  # x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_latest"
+  num_cores:
+    value: 1
+    widget: "number_field"
+    help: "Indicate the number of cores you need. The default is 1"
+  num_gpus:
+    value: 1
+    widget: "number_field"
+    help: "Indicate the number of gpus you need. A valid partition with GPUs need to be specified. Enter 0 for batch, debug or bigmem partitions. Entering 0 for gpu,gpu-debug and gpu-he partitions will result in job failure."
+  sh_mem:
+    label: "Memory (GB) (optional)"
+    widget: "number_field"
+    help: "<small>Amount of memory to allocate</small>"
+    value: 4
+  reservation:
+    widget: "text_field"
+    value: ""
+    label: "Reservation"
+    help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."

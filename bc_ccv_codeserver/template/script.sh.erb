@@ -16,7 +16,6 @@ echo " Print ENV "
 printenv | grep SLURM
 
 # Benchmark info
-echo "TIMING - Starting main script at: $(date)"
 
 # Set working directory to home directory
 cd "${HOME}"
@@ -28,8 +27,7 @@ export PASSWORD="$password"
 #
 
 # Purge the module environment to avoid conflicts
-module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
-
+module purge
 
 <%- unless context.modules.blank? -%>
 # Load the require modules
@@ -41,7 +39,7 @@ module load code-server/<%= context.version %>
 # Benchmark info
 # List loaded modules
 module list
-echo "TIMING - Starting jupyter at: $(date)"
+
 
 # Launch the VSCode Server
 set -x
@@ -50,4 +48,5 @@ code-server \
     --bind-addr="0.0.0.0:${port}" \
     --disable-telemetry \
     --user-data-dir="$CODE_SERVER_DATAROOT" \
-    --log debug 
+    --log debug
+
