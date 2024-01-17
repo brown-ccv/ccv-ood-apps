@@ -24,6 +24,7 @@ attributes:
     help: "This defines the version of MATLAB you want to load."
     options:
       - [ "R2023a", "matlab/R2023a" ]
+      - [ "R2019a", "matlab/R2019a" ]
   bc_account:
     label: "Condo Account"
     value: ""
