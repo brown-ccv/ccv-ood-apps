@@ -37,3 +37,4 @@ attributes:
     help: "This defines the version of R you want to load."
     options:
       - [ "r/4.2.2" ]
+      - [ "r/4.3.1" ]
