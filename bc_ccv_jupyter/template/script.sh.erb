@@ -26,7 +26,13 @@ conda activate <%=context.conda_env%>
 
 <%- unless context.modules.blank? -%>
 # Purge the module environment to avoid conflicts
-module purge 
+module purge
+
+# Update: psaluja (Sat-March9,2024)
+# Bug reported by Liqi Shu and Paul Stey - When specifying a module to load (e.g., ffmpeg), 
+# the Anaconda module fails to load, resulting in a 'Jupyter not found' error in the log.
+# To maintain cleanliness, we purge the environment and reload Anaconda along with the essential requested modules.
+module load anaconda
 
 # Load the require modules
 module load <%=context.modules%>
