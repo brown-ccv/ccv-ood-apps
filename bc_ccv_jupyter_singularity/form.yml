@@ -1,0 +1,60 @@
+# Batch Connect app configuration file
+#
+# @note Used to define the submitted cluster, title, description, and
+#   hard-coded/user-defined attributes that make up this Batch Connect app.
+---
+
+# **MUST** set cluster id here that matches cluster configuration file located
+# under /etc/ood/config/clusters.d/*.yml
+# @example Use the Owens cluster at Ohio Supercomputer Center
+#     cluster: "owens"
+cluster: "ood_oscar"
+attributes:
+  apptainer_image_path:
+    widget: text_field
+    label: "Path to apptainer image"
+  extra_jupyter_args:
+    value: ""
+    help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
+  bc_account:
+    label: "Condo account"
+    help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
+  bc_queue:
+    value: ""
+    label: "Partition"
+    help: "You can leave this blank if you are using the default for your account. Else you can specify the partition you want to run the jobs on in this field. A detailed overview of the partitions on OSCAR can be found in our [docs](https://docs.ccv.brown.edu/oscar/submitting-jobs/slurm) " 
+  bc_num_slots: 1
+  gpu_count:
+    widget: "number_field"
+    label: "Number of GPUs"
+    value: 1
+    min: 1
+    max: 4
+    step: 1
+    help: "<div class=\"alert alert-danger\" role=\"alert\"> This value is only used if you specify the appropriate gpu partition.</div>"
+  num_cores:
+    widget: "number_field"
+    label: "Number of cores"
+    value: 1
+    help: |
+      Number of cores on the Node
+  memtask:
+    widget: "text_field"
+    value: "default"
+    label: "Memory per job"
+    help: |
+      - **default** - Use default, 4 GB per task.
+      - **512M** - Use 512 MB.
+      - **128G** - Use 128 GB, this is the maximum on notchpeak-shared-short.
+form:
+  - apptainer_image_path
+  #- jupyterlab_switch
+  - extra_jupyter_args
+  - bc_queue
+  - num_cores
+  - memtask
+  - gpu_count
+  - bc_account
+  - bc_num_hours
+  - bc_num_slots
+  - bc_email_on_started
