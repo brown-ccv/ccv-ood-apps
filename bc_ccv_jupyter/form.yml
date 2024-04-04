@@ -13,21 +13,15 @@ attributes:
   modules:
     value: ""
     help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
-  anaconda_module:
-    widget: select
-    label: "OSCAR Anaconda module"
-    help: "Select the anaconda module on OSCAR  you want to run your jupyter-notebook from "
-    options:
-      - [ "anaconda/2-4.3.0", "anaconda/2-4.3.0"]
-      - [ "anaconda/2020.02" , "anaconda/2020.02"]
-      - [ "anaconda/2022.05" , "anaconda/2022.05"]
-      - [ "anaconda/3-5.2.0" , "anaconda/3-5.2.0"]
-      - [ "anaconda/2-5.3.0" , "anaconda/2-5.3.0"]
-      - [ " anaconda/3-4.3.0", "anaconda/3-4.3.0"]
-      - ["anaconda/2023.03-1", "anaconda/2023.03-1"]
   conda_env:
     value: ""
     help: "Type in the specific conda environment you want to launch the Jupyer notebook from. If you want you can choose the environment from the Jupyter interface instead presuming you have Jupyter installed in the base environment. You **will** need to provide this if Jupyter is only installed in a particular environment. The is the argument to `conda activate myenv`. You would only put in `myenv` here. "
+  mode:
+    widget: "radio"
+    value: "0"
+    options:
+      - ["Jupyter Lab","1"]
+      - ["Jupyter Notebook","0"]
   extra_jupyter_args:
     value: ""
     help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
@@ -73,8 +67,8 @@ attributes:
     help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
 
 form:
-  - anaconda_module
   - conda_env
+  - mode
   - modules
   #- jupyterlab_switch
   - extra_jupyter_args

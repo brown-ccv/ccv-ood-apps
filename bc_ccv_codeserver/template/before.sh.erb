@@ -1,5 +1,5 @@
 # Export the module function if it exists
-[[ $(type -t module) == "function" ]] && export -f module
+#[[ $(type -t module) == "function" ]] && export -f module
 
 # Find available port to run server on
 port=$(find_port)
@@ -12,4 +12,3 @@ SALT="$(create_passwd 16)"
 export password="$(create_passwd 16)"
 PASSWORD_SHA1="$(echo -n "${password}${SALT}" | openssl dgst -sha1 | awk '{print $NF}')"
 
-# export code_server_version="<%= context.version %>"

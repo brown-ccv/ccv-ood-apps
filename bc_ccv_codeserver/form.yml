@@ -6,35 +6,43 @@
 cluster: "ood_oscar"
 form:
   - bc_account
-  - desktop
-  - bc_vnc_idle
-  - bc_vnc_args
+  - modules
+  - version
+  # - desktop
+  # - bc_vnc_idle
+  # - bc_vnc_args
   - bc_num_hours
   - bc_num_slots
-  - bc_vnc_resolution
-  - x_module
+  # - bc_vnc_resolution
+  # - x_module
   - sh_queue
   - num_cores
   - num_gpus
   - sh_mem
   - reservation
-  - features
   - bc_email_on_started
 attributes:
   bc_vnc_args: "-vgl"
-  desktop:
-    widget: select
-    label: "Desktop Environment"
-    help: "Choose **xfce** unless you have been asked to use something else"
-    options:
-      - [ "xfce", "xfce" ]
-      - [ "kde", "kde" ] 
-      - [ "gnome", "gnome" ]
-  bc_vnc_idle: 0
-  bc_vnc_resolution:
-    required: true
+  # desktop:
+  #   widget: select
+  #   label: "Desktop Environment"
+  #   help: "Choose **xfce** unless you have been asked to use something else"
+  #   options:
+  #     - [ "xfce", "xfce" ]
+  #     - [ "kde", "kde" ]
+  # bc_vnc_idle: 0
+  # bc_vnc_resolution:
+  #   required: true
   bc_account:
     help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
+  modules:
+    value: ""
+    help: "You can leave this blank if you are not loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple modules use: `abc/12.3  python/2.7` "
+  version:
+    widget: "select"
+    label: "Codeserver Version"
+    options:
+      - ["4.20.0", "4.20.0"]
   sh_queue:
     label: "partition"
     help: "Choose the partition to run this job"
@@ -52,7 +60,7 @@ attributes:
       - [ "gpu-condo","gpu-condo"]
   bc_num_slots: 1
   #x_module: "xfce/4.12"
-  x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_latest"
+  # x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_latest"
   num_cores:
     value: 1
     widget: "number_field"
@@ -71,10 +79,3 @@ attributes:
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
-  features:
-    widget: "text_field"
-    value: ""
-    label: "Slurm Features"
-    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
-
-    
