@@ -25,11 +25,11 @@ batch_connect:
 #
 script:
   native:
-    - "-c"
-    - "<%= num_cores %>" 
     - "-n"
+    - "<%= num_cores %>" 
+    - "-N"
     - "1"
-    <%- if (["gpu", "cbc-a5000-gcondo", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "gcondo" ].include?(bc_queue)) -%>
+    <%- if (["gpu", "cbc-a5000-gcondo", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "gcondo", "gracehopper"].include?(bc_queue)) -%>
     - "--gres=gpu:<%= gpu_count %>"
     <%- end -%>
     <%- if memtask != "default" -%>
