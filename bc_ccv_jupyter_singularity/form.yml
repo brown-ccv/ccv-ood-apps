@@ -19,7 +19,7 @@ attributes:
     help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
   bc_account:
     label: "Condo account"
-    help: "You can leave this blank if you are **not** using a condo else enter the condo name here for example `cbc-condo`"
+    help: "You can leave this blank if you are **not** using a condo. Otherwise, enter the condo name here. Ror example `cbc-condo`"
   bc_queue:
     value: ""
     label: "Partition"

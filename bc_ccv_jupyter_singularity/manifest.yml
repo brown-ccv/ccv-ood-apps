@@ -1,7 +1,7 @@
 ---
 name: Jupyter Notebook for Apptainer Images
 category: Interactive Apps
-subcategory: Default GUIs
+subcategory: Expert GUIs
 role: batch_connect
 description: |
-  This app will launch an RStudio server on one or more nodes in a Apptainer container.  If you are not familiar with containers then it might be simpler to run the other Jupyter Notebook apps.<div class="alert alert-danger" role="alert"> You will **NOT** be able to use this app if Jupyter Notebook is not installed inside the image.</div>
+  This app will launch an Jupyter Notebook server on one or more nodes in a Apptainer container.  If you are not familiar with containers then it might be simpler to run the other Jupyter Notebook apps.<div class="alert alert-danger" role="alert"> You will **NOT** be able to use this app if Jupyter Notebook is not installed inside the image.</div>
