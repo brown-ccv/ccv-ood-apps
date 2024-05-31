@@ -13,6 +13,12 @@ cd "${HOME}"
 # #unset XDG_RUNTIME_DIR
 export XDG_RUNTIME_DIR=""
 
+<%- if context.additional_data_path.blank? -%>
+export APPTAINER_BINDPATH="/oscar/scratch/$USER,/users/$USER"
+<%- else -%>
+add_path=$(echo "<%= context.additional_data_path %>" |  xargs) 
+export APPTAINER_BINDPATH="${add_path},/oscar/scratch/$USER,/users/$USER"
+<%- end -%>
 #
 # Start Jupyter Notebook Server
 #

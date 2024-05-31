@@ -4,4 +4,4 @@ category: Interactive Apps
 subcategory: Default GUIs
 role: batch_connect
 description: |
-  This app will allow you to launch a Jupyter Notebook server on one node. Use this application if you are using python virtual environments  <div class="alert alert-danger" role="alert"> You will **NOT** be able to use this app if you do not specify a Python Virtual Environment. Use "Jupyter Notebooks with Anaconda" app instead</div>
+  This app will launch an RStudio server on one or more nodes in a Apptainer container.  If you are not familiar with containers then it might be simpler to run the other Jupyter Notebook apps.<div class="alert alert-danger" role="alert"> You will **NOT** be able to use this app if Jupyter Notebook is not installed inside the image.</div>

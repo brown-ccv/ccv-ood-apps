@@ -37,4 +37,9 @@ script:
     <%- else -%>
     - "--mem=4G"
     <%- end -%>
- 
+    <%- if reservation.length >0  -%>
+    - "--reservation=<%= reservation %>"
+    <%- end -%>
+    <%- if features.length >0  -%>
+    - "--constraint=<%= features %>"
+    <%- end -%>

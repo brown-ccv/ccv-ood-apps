@@ -12,7 +12,8 @@ cluster: "ood_oscar"
 attributes:
   apptainer_image_path:
     widget: text_field
-    label: "Path to apptainer image"
+    label: "Path to apptainer image (required)"
+    help: "Enter the full path of the Apptainer image. You can also try a sample image from `/oscar/runtime/software/external/ngc-containers/` "
   extra_jupyter_args:
     value: ""
     help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
@@ -45,7 +46,21 @@ attributes:
     help: |
       - **default** - Use default, 4 GB per task.
       - **512M** - Use 512 MB.
-      - **128G** - Use 128 GB, this is the maximum on notchpeak-shared-short.
+      - **16G** - Use 16 GB
+  additional_data_path:
+    widget: "text_field"
+    value: ""
+    help: "Enter any other path on OSCAR that you want to be accessible to your container. By default your home and scratch paths are allowed access, but if you wanted to access any specific paths on `/oscar/data` that will be unavailable to your container unless you specifiy it here. If you need to specify multiple paths seperate them by commas for eg `/oscar/data/abc,/oscar/data/cde`"
+  reservation:
+    widget: "text_field"
+    value: ""
+    label: "Reservation"
+    help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs. This field is rarely used outside classes and workshops "
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
 form:
   - apptainer_image_path
   #- jupyterlab_switch
@@ -57,4 +72,7 @@ form:
   - bc_account
   - bc_num_hours
   - bc_num_slots
+  - additional_data_path
+  - features
+  - reservation
   - bc_email_on_started
