@@ -1,0 +1,78 @@
+# Batch Connect app configuration file
+#
+# @note Used to define the submitted cluster, title, description, and
+#   hard-coded/user-defined attributes that make up this Batch Connect app.
+---
+
+# **MUST** set cluster id here that matches cluster configuration file located
+# under /etc/ood/config/clusters.d/*.yml
+# @example Use the Owens cluster at Ohio Supercomputer Center
+#     cluster: "owens"
+cluster: "ood_oscar"
+attributes:
+  apptainer_image_path:
+    widget: text_field
+    label: "Path to apptainer image (required)"
+    help: "Enter the full path of the Apptainer image. You can also try a sample image from `/oscar/runtime/software/external/ngc-containers/` "
+  extra_jupyter_args:
+    value: ""
+    help: "Any extra command line arguments to feed to the `jupyter-notebook ...` command that launches the Jupyter notebook within the batch job"
+  bc_account:
+    label: "Condo account"
+    help: "You can leave this blank if you are **not** using a condo. Otherwise, enter the condo name here. Ror example `cbc-condo`"
+  bc_queue:
+    value: ""
+    label: "Partition"
+    help: "You can leave this blank if you are using the default for your account. Else you can specify the partition you want to run the jobs on in this field. A detailed overview of the partitions on OSCAR can be found in our [docs](https://docs.ccv.brown.edu/oscar/submitting-jobs/slurm) " 
+  bc_num_slots: 1
+  gpu_count:
+    widget: "number_field"
+    label: "Number of GPUs"
+    value: 1
+    min: 1
+    max: 4
+    step: 1
+    help: "<div class=\"alert alert-danger\" role=\"alert\"> This value is only used if you specify the appropriate gpu partition.</div>"
+  num_cores:
+    widget: "number_field"
+    label: "Number of cores"
+    value: 1
+    help: |
+      Number of cores on the Node
+  memtask:
+    widget: "text_field"
+    value: "default"
+    label: "Memory per job"
+    help: |
+      - **default** - Use default, 4 GB per task.
+      - **512M** - Use 512 MB.
+      - **16G** - Use 16 GB
+  additional_data_path:
+    widget: "text_field"
+    value: ""
+    help: "Enter any other path on OSCAR that you want to be accessible to your container. By default your home and scratch paths are allowed access, but if you wanted to access any specific paths on `/oscar/data` that will be unavailable to your container unless you specifiy it here. If you need to specify multiple paths seperate them by commas for eg `/oscar/data/abc,/oscar/data/cde`"
+  reservation:
+    widget: "text_field"
+    value: ""
+    label: "Reservation"
+    help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs. This field is rarely used outside classes and workshops "
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
+form:
+  - apptainer_image_path
+  #- jupyterlab_switch
+  - extra_jupyter_args
+  - bc_queue
+  - num_cores
+  - memtask
+  - gpu_count
+  - bc_account
+  - bc_num_hours
+  - bc_num_slots
+  - additional_data_path
+  - features
+  - reservation
+  - bc_email_on_started
