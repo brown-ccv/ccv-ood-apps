@@ -1,4 +1,3 @@
----
 batch_connect:
   template: "basic"
 script:
@@ -8,6 +7,10 @@ script:
     - "--mem=<%= sh_mem %>GB"
     - "-n"
     - "1"
+    <%- if reservation.length > 0 -%>
+    - "--reservation=<%= reservation %>"
+    <%- end -%>
     #- "--nodes=<%= bc_num_slots %> "
     #- "--cpus-per-task=<%= num_cores %> "
     #- "--mem=<%= sh_mem %>GB"
+
