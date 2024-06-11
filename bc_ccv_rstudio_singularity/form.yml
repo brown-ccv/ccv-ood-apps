@@ -13,6 +13,7 @@ form:
   - r_module
   - additional_data_path
   - modules
+  - reservation 
   - bc_email_on_started
 attributes:
 
@@ -46,3 +47,8 @@ attributes:
     widget: "text_field"
     value: ""
     help: "Enter any other path on OSCAR that you want to be accessible to your container. By default your home and scratch paths are allowed access, but if you wanted to access any specific paths on `/gpfs/data` that will be unavailable to your container unless you specifiy it here. If you need to specify multiple paths seperate them by commas for eg `/gpfs/data/abc,/gpfs/data/cde`"
+  reservation:
+    widget: "text_field"
+    value: ""
+    label: "Reservation"
+    help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs. This field is rarely used outside classes and workshops "
