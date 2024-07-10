@@ -16,6 +16,14 @@ attributes:
   conda_env:
     value: ""
     help: "Type in the specific conda environment you want to launch the Jupyer notebook from. If you want you can choose the environment from the Jupyter interface instead presuming you have Jupyter installed in the base environment. You **will** need to provide this if Jupyter is only installed in a particular environment. The is the argument to `conda activate myenv`. You would only put in `myenv` here. "
+  anaconda_module:
+    widget: "select"
+    label: "Anaconda module from LMOD"
+    help: "Choose the appropriate conda module. This is the same module you used to create the environment"
+    value: "anaconda"
+    options:
+      - ["anaconda","anaconda/2023.09-0-7nso27y"]
+      - ["miniconda3","miniconda3/23.11.0s"]
   mode:
     widget: "radio"
     value: "0"
@@ -69,6 +77,7 @@ attributes:
 form:
   - conda_env
   - mode
+  - anaconda_module
   - modules
   #- jupyterlab_switch
   - extra_jupyter_args

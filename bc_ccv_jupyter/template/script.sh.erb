@@ -17,7 +17,19 @@ export XDG_RUNTIME_DIR=""
 # Start Jupyter Notebook Server
 #
 # load the required conda module
-module load anaconda
+module load <%= context.anaconda_module %>
+
+if [[ <%= context.anaconda_module%> =~ miniconda3 ]]
+    then
+    source /oscar/runtime/software/external/miniconda3/23.11.0/etc/profile.d/conda.sh
+fi
+
+if [[ <%= context.anaconda_module%> =~ anaconda ]]
+    then
+    source /oscar/rt/9.2/software/0.20-generic/0.20.1/opt/spack/linux-rhel9-x86_64_v3/gcc-11.3.1/anaconda-2023.09-0-7nso27ys7navjquejqdxqylhg7kuyvxo/etc/profile.d/conda.sh
+fi
+
+##source /oscar/runtime/software/<%=context.anaconda_module%>/etc/profile.d/conda.sh
 
 <%- unless context.conda_env.blank? -%>
 #source /gpfs/runtime/opt/<#%=context.anaconda_module%>/etc/profile.d/conda.sh
