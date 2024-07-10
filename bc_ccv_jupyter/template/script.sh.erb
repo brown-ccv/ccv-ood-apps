@@ -17,10 +17,20 @@ export XDG_RUNTIME_DIR=""
 # Start Jupyter Notebook Server
 #
 # load the required conda module
-module load <%= context.anaconda_module %>
 
-if [[ <%= context.anaconda_module%> =~ miniconda3 ]]
+<%- unless context.conda_env.blank? -%>
+module load <%= context.anaconda_module %>
+<%- else -%>
+module load anaconda
+source /oscar/rt/9.2/software/0.20-generic/0.20.1/opt/spack/linux-rhel9-x86_64_v3/gcc-11.3.1/anaconda-2023.09-0-7nso27ys7navjquejqdxqylhg7kuyvxo/etc/profile.d/conda.sh
+<%- end -%>
+#2024/07/10 Prasad - In the above block, if a conda env is specified, the specified conda lmod env is loaded. If the conda_env field is blank, anaconda is loaded.
+#Explanation: The miniconda3 module does not have jupyter. Thus, if not conda env is specified and miniconda3 is chosen, Jupyter notebook doesn't start.
+
+
+if [[ <%= context.anaconda_module%> =~ miniconda3 ]] && [[ <%= context.conda_env.blank?%> =~ false ]]
     then
+    #This block does not run if conda_env is blank
     source /oscar/runtime/software/external/miniconda3/23.11.0/etc/profile.d/conda.sh
 fi
 
