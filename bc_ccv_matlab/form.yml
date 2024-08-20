@@ -2,6 +2,9 @@
 title: "MATLAB on OSCAR"
 cluster: "ood_oscar"
 attributes:
+  modules:
+    value: ""
+    help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
   num_cores:
     widget: "number_field"
     label: "Number of cores"
@@ -51,6 +54,7 @@ form:
   - num_cores
   - bc_num_hours
   - memtask
+  - modules
   - bc_account
   - bc_queue
   - reservation

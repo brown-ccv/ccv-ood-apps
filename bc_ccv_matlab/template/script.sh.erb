@@ -35,6 +35,9 @@ cd "${HOME}"
 # Load the required environment
 module load <%= context.version %>
 
+# Load the require modules
+module load <%=context.modules%>
+
 # Launch MATLAB
 module list
 set -x
