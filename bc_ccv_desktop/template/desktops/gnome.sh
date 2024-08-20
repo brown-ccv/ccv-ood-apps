@@ -2,10 +2,10 @@ mkdir -p ${HOME}/.ood_config
 export XDG_CONFIG_HOME="${HOME}/.ood_config"
 
 # Turn off screensaver
-gconftool-2 --set -t boolean /apps/gnome-screensaver/idle_activation_enabled false
+# gconftool-2 --set -t boolean /apps/gnome-screensaver/idle_activation_enabled false
 
 # Use browser window instead in nautilus
-gconftool-2 --set -t boolean /apps/nautilus/preferences/always_use_browser true
+# gconftool-2 --set -t boolean /apps/nautilus/preferences/always_use_browser true
 
 # Disable the disk check utility on autostart
 mkdir -p "${XDG_CONFIG_HOME}/autostart"

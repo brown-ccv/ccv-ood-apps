@@ -56,7 +56,7 @@ if [[  <%= context.sh_queue%> =~ (gpu|gcondo)  ]] #Checks if the partition conta
 then
 if [[ <%= context.num_gpus%> -gt 0  ]]
 then
-vglrun xfce4-session
+vglrun +v xfce4-session
 else
  echo "You cannot request zero GPUs on jobs to gpu partition" 1>&2
  exit 1

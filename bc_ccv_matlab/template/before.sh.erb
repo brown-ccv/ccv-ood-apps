@@ -1,2 +1,3 @@
 # Export the module function if it exists
-[[ $(type -t module) == "function" ]] && export -f module
+# Activate the LMOD modules
+source /oscar/runtime/software/0.20-generic/utility/activate_lmod_user.sh

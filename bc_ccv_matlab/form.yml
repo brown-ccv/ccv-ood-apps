@@ -2,6 +2,9 @@
 title: "MATLAB on OSCAR"
 cluster: "ood_oscar"
 attributes:
+  modules:
+    value: ""
+    help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
   num_cores:
     widget: "number_field"
     label: "Number of cores"
@@ -24,13 +27,7 @@ attributes:
     help: "This defines the version of MATLAB you want to load."
     options:
       - [ "R2023a", "matlab/R2023a" ]
-      - [ "R2021a", "matlab/R2021a" ]
       - [ "R2019a", "matlab/R2019a" ]
-      - [ "R2018b", "matlab/R2018b" ]
-      - [ "R2018a", "matlab/R2018a" ]
-      - [ "R2017a", "matlab/R2017a" ]
-      - [ "R2017b", "matlab/R2017b" ]
-      - [ "R2016a", "matlab/R2016a" ]
   bc_account:
     label: "Condo Account"
     value: ""
@@ -57,6 +54,7 @@ form:
   - num_cores
   - bc_num_hours
   - memtask
+  - modules
   - bc_account
   - bc_queue
   - reservation

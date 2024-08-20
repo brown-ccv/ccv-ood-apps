@@ -13,30 +13,30 @@ cd "${HOME}"
 # #unset XDG_RUNTIME_DIR
 export XDG_RUNTIME_DIR=""
 
+<%- if context.additional_data_path.blank? -%>
+export APPTAINER_BINDPATH="/oscar/scratch/$USER,/users/$USER"
+<%- else -%>
+add_path=$(echo "<%= context.additional_data_path %>" |  xargs) 
+export APPTAINER_BINDPATH="${add_path},/oscar/scratch/$USER,/users/$USER"
+<%- end -%>
 #
 # Start Jupyter Notebook Server
 #
 # load the required conda module
 
 
-<%- unless context.virtualenv.blank? -%>
-source <%=context.virtualenv%>/bin/activate
-<%- end -%>
 
-
-<%- unless context.modules.blank? -%>
 # Purge the module environment to avoid conflicts
-module purge
-# Load the require modules
-module load <%=context.modules%>
+# module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0 
 
-<%- end -%>
+# Load the require modules
+
 
 # Benchmark info
 # List loaded modules
-module list
+# module list
 echo "TIMING - Starting jupyter at: $(date)"
 
 # Launch the Jupyter Notebook Server
 set -x
-jupyter <%= context.mode == "1" ? "lab" : "notebook" %> --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>
+apptainer exec --nv  <%=context.apptainer_image_path%> jupyter lab --config="${CONFIG_FILE}" <%= context.extra_jupyter_args %>

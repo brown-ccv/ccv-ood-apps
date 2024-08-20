@@ -30,7 +30,8 @@ export XDG_SESSION_TYPE
 export TVNC_ALRALL=1
 export TVNC_VGL=1
 IFS="," read -ra DISP <<< "$SLURM_JOB_GPUS"
-export VGL_DISPLAY=`hostname`:0.${DISP[0]}
+export VGL_DISPLAY=:0.${DISP[0]}
+echo "VGL DISPLAY is set to" $VGL_DISPLAY
 fi
 ##END
 # Start up desktop
