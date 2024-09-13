@@ -48,9 +48,16 @@ EOL
 )
 chmod 700 "${RSESSION_WRAPPER_FILE}"
 
+# Add environment variables to .Renviron
+mkdir $tmp_path/rstudio
+echo "PATH=$PATH:\$PATH" >> $tmp_path/.Renviron
+echo "CPATH=$CPATH:\$CPATH" >> $tmp_path/.Renviron
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:\$LD_LIBRARY_PATH:/opt/lib" >> $tmp_path/.Renviron
+echo "LIBRARY_PATH=$LIBRARY_PATH:\$LIBRARY_PATH" >> $tmp_path/.Renviron
+cat $HOME/.Renviron >> $tmp_path/.Renviron
+
 # Set working directory to home directory
 cd "${HOME}"
-
 export TMPDIR="$(mktemp -d)"
 
 mkdir -p "$TMPDIR/rstudio-server"
@@ -69,12 +76,7 @@ printf 'provider=sqlite\ndirectory=/var/lib/rstudio-server\n' > $tmp_path/databa
 module_r_path=`which R`
 
 
-echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
-  ln -s /opt/lib/libicuuc.so.50.2 /opt/lib/libicuuc.so.50 || true ; \
-  ln -s /opt/lib/libicui18n.so.50.2 /opt/lib/libicui18n.so.50 || true;\
-  ln -s /opt/lib/libtinfo.so.5.9 /opt/lib/libtinfo.so.5 || true ; \
-  ln -s /opt/lib/libicudata.so.50.2 /opt/lib/libicudata.so.50 || true ; \
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib && /usr/lib/rstudio-server/bin/rserver --www-port ${port} \
+echo " export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib && /usr/lib/rstudio-server/bin/rserver --www-port ${port} \
  --rsession-which-r $module_r_path \
  --auth-none 1 \
  --auth-encrypt-password 0 \
@@ -83,12 +85,12 @@ echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
  --server-user ${USER} \
  --auth-pam-helper-path ${RSTUDIO_AUTH}" > $tmp_path/rstudio_run_4.2.0.sh
 
-echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
-  ln -s /opt/lib/libicuuc.so.50.2 /opt/lib/libicuuc.so.50 || true ; \
-  ln -s /opt/lib/libicui18n.so.50.2 /opt/lib/libicui18n.so.50 || true;\
-  ln -s /opt/lib/libtinfo.so.5.9 /opt/lib/libtinfo.so.5 || true ; \
-  ln -s /opt/lib/libicudata.so.50.2 /opt/lib/libicudata.so.50 || true ; \
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib && /usr/lib/rstudio-server/bin/rserver --www-port ${port} \
+#echo " ln -s  /opt/lib/libreadline.so.6.2 /opt/lib/libreadline.so.6 || true ; \
+#  ln -s /opt/lib/libicuuc.so.50.2 /opt/lib/libicuuc.so.50 || true ; \
+#  ln -s /opt/lib/libicui18n.so.50.2 /opt/lib/libicui18n.so.50 || true;\
+#  ln -s /opt/lib/libtinfo.so.5.9 /opt/lib/libtinfo.so.5 || true ; \
+#  ln -s /opt/lib/libicudata.so.50.2 /opt/lib/libicudata.so.50 || true ; \
+echo "  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib && /usr/lib/rstudio-server/bin/rserver --www-port ${port} \
  --rsession-which-r $module_r_path \
  --auth-none 1 \
  --auth-encrypt-password 0 \
@@ -101,28 +103,18 @@ echo "*********************"
 echo " THIS IS LD PATH"
 echo $LD_LIBRARY_PATH
 echo "*************************"
-<%- if context.r_module.include? "R/4" -%>
 
-APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
- --bind /oscar/rt/9.2,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,/nfs/jbailey5/baileyweb/,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
+export APPTAINER_BINDPATH="/oscar/rt/9.2,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,/nfs/jbailey5/baileyweb/,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,$tmp_path/.Renviron:/users/$USER/.Renviron"
+
+<%- if context.r_module.include? "r/4" -%>
+
+#APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
+singularity exec \
   /oscar/rt/9.2/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
-  #/gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_4.2.0.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
 <%- else -%>
-APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
- --bind /oscar/rt/9.2,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,/nfs/jbailey5/baileyweb/,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,/gpfs/home/$USER:/users/$USER \
+APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
   /oscar/rt/9.2/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_3.6.3.sh
 <%- end -%>
-
-#SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  SINGULARITYENV_PREPEND_PATH=$PATH singularity exec \
-# --bind /gpfs/runtime,/gpfs/data,/gpfs/scratch,/gpfs/runtime/opt/ood_system/rstudio_server_sing/libs:/opt/lib,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf \
-#  /gpfs/runtime/opt/ood_system/rstudio_server_sing/rstudio_4.2.0.sif \
-#  /usr/lib/rstudio-server/bin/rserver --www-port "${port}" \
-# --rsession-which-r $module_r_path \
-# --auth-none 1 \
-# --auth-encrypt-password 0 \
-#  --rsession-path "${RSESSION_WRAPPER_FILE}" \
-#  --server-data-dir /tmp --server-working-dir /tmp \
-#  --server-user $USER --auth-pam-helper-path "${RSTUDIO_AUTH}" 
-
+#APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
 
 # echo 'Singularity has exited...'
