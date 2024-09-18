@@ -6,29 +6,23 @@ module load <%=context.x_module%>
 
 # Work around spam message about dconf write permissions
 #export XDG_RUNTIME_DIR="/tmp/${UID}"
-unset XDG_RUNTIME_DIR
+#unset XDG_RUNTIME_DIR
 
 # Set working directory to home directory
 cd "${HOME}"
 
-#
-# Launch Xfce Window Manager and Panel
-#
 
-#
 # Launch Xfce Window Manager and Panel
-#
-
 (
   export SEND_256_COLORS_TO_REMOTE=1
   export XDG_CONFIG_HOME="<%= session.staged_root.join("config") %>"
   export XDG_DATA_HOME="<%= session.staged_root.join("share") %>"
   export XDG_CACHE_HOME="$(mktemp -d)"
-#  set -x
+  set -x
   eval $(dbus-launch --sh-syntax)
-  xfwm4 --compositor=off --sm-client-disable
+  xfwm4 --compositor=off --sm-client-disable &
   xsetroot -solid "#D3D3D3"
-  xfsettingsd --daemon --sm-client-disable
+  xfsettingsd --sm-client-disable &
   xfce4-panel --sm-client-disable
 ) &
 
