@@ -42,6 +42,7 @@ attributes:
     widget: "select"
     label: "Codeserver Version"
     options:
+      - ["4.97.2","4.97.2"]
       - ["4.20.0", "4.20.0"]
   sh_queue:
     label: "partition"
