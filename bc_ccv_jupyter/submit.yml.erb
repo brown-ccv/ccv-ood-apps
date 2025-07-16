@@ -29,7 +29,7 @@ script:
     - "<%= num_cores %>" 
     - "-N"
     - "1"
-    <%- if (["gpu", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "gcondo" ].include?(bc_queue)) -%>
+    <%- if (["gpu", "gpu-he","gpu-debug","gpu-condo", "3090-gcondo", "a6000-gcondo", "copsy-gcondo", "cs-all-gcondo", "h100-gcondo", "l40s-gcondo", "lgouskos-h100-gcondo", "gcondo", "rsingh47-gcondo", "lgouskos-h100-gcondo", "mbessa-gcondo", "ssrinath-gcondo" ].include?(bc_queue)) -%>
     - "--gres=gpu:<%= gpu_count %>"
     <%- end -%>
     <%- if memtask != "default" -%>
