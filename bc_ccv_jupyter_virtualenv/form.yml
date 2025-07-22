@@ -61,6 +61,12 @@ attributes:
     options:
       - ["Jupyter Lab","1"]
       - ["Jupyter Notebook","0"]
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
+
 form:
   - virtualenv
   - mode
@@ -74,5 +80,6 @@ form:
   - bc_account
   - reservation
   - bc_num_hours
-  - bc_num_slots
+  - features
+  # - bc_num_slots
   - bc_email_on_started
