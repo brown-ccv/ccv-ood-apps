@@ -8,6 +8,7 @@ form:
   - num_cores
   - sh_mem
   - r_singularity_container_path
+  - rocker_image
   - r_package_path
   - r_exec_path
   - r_module
@@ -38,7 +39,7 @@ attributes:
     value: "~/R"
     help: "The full path to the directory of where you want to install the packages locally. When you provide this option, packages will be installed locally instead of in your container. You might want to use this in the context of testing or if you prefer to use a base R container and install everything on the fly." 
   r_exec_path:
-    label: "Path for R Executable ( required)"
+    label: "Path for temporary R Executable ( required)"
     widget: "text_field"
     required: true
     value: "~/bin/R"
@@ -52,3 +53,9 @@ attributes:
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs. This field is rarely used outside classes and workshops "
+  rocker_image:
+    widget: "check_box"
+    checked_value: true
+    unchecked_value: false
+    label: "Is this a Rocker image?"
+    help: "If this image was pulled from [Rocker](https://hub.docker.com/u/rocker), check this box"

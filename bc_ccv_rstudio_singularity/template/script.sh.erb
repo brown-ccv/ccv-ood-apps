@@ -2,7 +2,7 @@
 
 
 # Purge the module environment to avoid conflicts
-module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
+#module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
 
 # Load the required environment
 
@@ -50,7 +50,11 @@ cat > ${workdir}/rsession.sh <<END
 #!/bin/sh
 export OMP_NUM_THREADS=${SLURM_JOB_CPUS_PER_NODE}
 export R_LIBS_USER=$r_package_path
+<%- if context.rocker_image -%>
+exec /usr/lib/rstudio-server/bin/rsession "\${@}"
+<%- else -%>
 exec rsession "\${@}"
+<%- end -%>
 END
 
 chmod +x ${workdir}/rsession.sh
