@@ -48,6 +48,7 @@ attributes:
       - [ "gpu-he","gpu-he" ]
       - [ "3090-gcondo","3090-gcondo"]
       - [ "a6000-gcondo","a6000-gcondo"]
+      - [ "h100-gcondo","h100-gcondo"]
       - [ "gcondo","gcondo"]
       - [ "gpu-condo","gpu-condo"]
   bc_num_slots: 1
