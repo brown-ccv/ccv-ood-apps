@@ -62,6 +62,7 @@ attributes:
       - [ "ssrinath-gcondo","ssrinath-gcondo"]
       - [ "gpu-condo","gpu-condo"]
       - [ "l40s-gcondo","l40s-gcondo"]
+      - [ "h100-gcondo","h100-gcondo"]
   bc_num_slots: 1
   #x_module: "xfce/4.12"
   # x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_latest"
