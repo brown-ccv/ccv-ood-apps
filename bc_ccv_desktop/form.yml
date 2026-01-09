@@ -3,7 +3,7 @@
 # under /etc/ood/config/clusters.d/*.yml
 # @example Use the Owens cluster at Ohio Supercomputer Center
 #     cluster: "owens"
-cluster: "ood_oscar"
+cluster: "slurmctld"
 form:
   - bc_account
   - desktop

@@ -1,5 +1,5 @@
 ---
-cluster: "ood_oscar"
+cluster: "slurmctld"
 form:
   - bc_account
   - bc_queue
