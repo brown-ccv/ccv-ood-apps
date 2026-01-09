@@ -51,6 +51,9 @@ attributes:
       - [ "h100-gcondo","h100-gcondo"]
       - [ "gcondo","gcondo"]
       - [ "gpu-condo","gpu-condo"]
+      - [ "gpu-b200","gpu-b200"]
+      - [ "gpu96","gpu96"]
+      - [ "batch96","batch96"]
   bc_num_slots: 1
   #x_module: "xfce/4.12"
   x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16_latest"
