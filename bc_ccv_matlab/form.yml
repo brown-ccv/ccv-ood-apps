@@ -1,6 +1,6 @@
 ---
 title: "MATLAB on OSCAR"
-cluster: "ood_oscar"
+cluster: "slurmctld"
 attributes:
   modules:
     value: ""
