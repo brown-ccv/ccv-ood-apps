@@ -2,7 +2,6 @@
 
 
 # Purge the module environment to avoid conflicts
-module unload java/8u111 matlab/R2017b python/2.7.12 intel/2017.0
 
 # Load the required environment
 
@@ -104,16 +103,16 @@ echo " THIS IS LD PATH"
 echo $LD_LIBRARY_PATH
 echo "*************************"
 
-export APPTAINER_BINDPATH="/oscar/rt/9.2,/oscar/runtime,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,/nfs/jbailey5/baileyweb/,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,$tmp_path/.Renviron:/users/$USER/.Renviron"
+export APPTAINER_BINDPATH="/oscar/rt/9.6,/oscar/runtime,/oscar/home,/users/,/oscar/data,/oscar/scratch,/gpfs/runtime,/gpfs/data,/gpfs/scratch,/nfs/jbailey5/baileyweb/,$tmp_path/run:/run,$tmp_path/var-lib-rstudio-server:/var/lib/rstudio-server,$tmp_path/database.conf:/etc/rstudio/database.conf,$tmp_path/.Renviron:/users/$USER/.Renviron"
 
 <%- if context.r_module.include? "r/4" -%>
 
 #APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
 singularity exec \
-  /oscar/rt/9.2/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
+  /oscar/rt/9.6/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_4.2.0.sh
 <%- else -%>
 APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
-  /oscar/rt/9.2/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_3.6.3.sh
+  /oscar/rt/9.6/ood_system/rstudio_server_sing/rstudio-rhel9.sif /bin/bash $tmp_path/rstudio_run_3.6.3.sh
 <%- end -%>
 #APPTAINERENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib  APPTAINERENV_PREPEND_PATH=$PATH singularity exec \
 
