@@ -9,10 +9,14 @@ script:
     - "1" 
     - "-c"
     - "<%= num_cores %>"
+    - "--partition=<%= bc_queue %>"
     <%- if memtask != "default" -%>
     - "--mem"
     - "<%= memtask %>"
     <%- end -%>
     <%- if reservation.length >0  -%>
     - "--reservation=<%= reservation %>"
+    <%- end -%>
+    <%- if features.length>0  -%>
+    - "--constraint=<%= features %>"
     <%- end -%>

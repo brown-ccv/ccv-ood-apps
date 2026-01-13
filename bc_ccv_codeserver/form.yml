@@ -43,8 +43,7 @@ attributes:
     widget: "select"
     label: "Codeserver Version"
     options:
-      - ["4.97.2","4.97.2"]
-      - ["4.20.0", "4.20.0"]
+      - ["4.96.4","4.96.4"]
   sh_queue:
     label: "partition"
     help: "Choose the partition to run this job"

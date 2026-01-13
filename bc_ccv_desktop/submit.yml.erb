@@ -1,6 +1,7 @@
 ---
 batch_connect:
   template: vnc
+  websockify_timeout_seconds: 60
 script:
   native: [
           "-N <%= bc_num_slots %>",

@@ -8,7 +8,7 @@ mkdir -p "$CODE_SERVER_DATAROOT/extensions"
 if [ ! -s "${HOME}/.local/share/code-server/Machine/settings.json" ]
     then
     mkdir -p ${HOME}/.local/share/code-server/Machine
-    ln -s /gpfs/runtime/opt/vscode-server/ccv-vscode-config/settings.json \
+    cp /gpfs/runtime/opt/vscode-server/ccv-vscode-config/settings.json \
         ${HOME}/.local/share/code-server/Machine/settings.json
 fi
 

@@ -4,7 +4,7 @@ cluster: "slurmctld"
 attributes:
   modules:
     value: ""
-    help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
+    help: "You can leave this blank if you are **not** loading additional modules. Otherwise load multiple modules by module names seperated by spaces. For example to load multiple  modules use: `R/3.5.1 gdal/3.11.0` "
   num_cores:
     widget: "number_field"
     label: "Number of cores"
@@ -26,8 +26,7 @@ attributes:
     label: "MATLAB version"
     help: "This defines the version of MATLAB you want to load."
     options:
-      - [ "R2023a", "matlab/R2023a" ]
-      - [ "R2019a", "matlab/R2019a" ]
+      - [ "R2025a", "matlab/R2025a" ]
   bc_account:
     label: "Condo Account"
     value: ""
@@ -42,13 +41,17 @@ attributes:
       - **default** - Use default, 4 GB per task.
       - **512M** - Use 512 MB.
       - **128G** - Use 128 GB.
-  x_module: "xfce/4.12"
   reservation:
     widget: "text_field"
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
-  #x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
+      #x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
 form:
   - version
   - num_cores
@@ -58,6 +61,5 @@ form:
   - bc_account
   - bc_queue
   - reservation
-  - bc_vnc_resolution
+  - features
   - bc_email_on_started
-  - x_module

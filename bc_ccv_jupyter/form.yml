@@ -22,8 +22,8 @@ attributes:
     help: "Choose the appropriate conda module. This is the same module you used to create the environment"
     value: "anaconda"
     options:
-      - ["anaconda","anaconda/2023.09-0-7nso27y"]
-      - ["miniconda3","miniconda3/23.11.0s"]
+      - ["anaconda3","anaconda3/2023.09-0"]
+      - ["miniforge3","miniforge3/25.3.0-3-vrlt"]
   mode:
     widget: "radio"
     value: "0"
