@@ -9,6 +9,8 @@ form:
   - sh_mem
   - modules
   - r_module
+  - features
+  - reservation
   - bc_email_on_started
 attributes:
   bc_account:
@@ -38,4 +40,14 @@ attributes:
     options:
       - [ "r/4.3.1" ]
       - [ "r/4.5.1" ]
+  reservation:
+    widget: "text_field"
+    value: ""
+    label: "Reservation"
+    help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
 

@@ -1,13 +1,18 @@
 ---
 batch_connect:
   template: "basic"
+  websockify_timeout_seconds: 60
 script:
-  native:
-    - "-N <%= bc_num_slots %>"
-    - "-c <%= num_cores %>"
-    - "--mem=<%= sh_mem %>GB"
-    - "-n"
-    - "1"
-    #- "--nodes=<%= bc_num_slots %> "
-    #- "--cpus-per-task=<%= num_cores %> "
-    #- "--mem=<%= sh_mem %>GB"
+  native: [
+    "-N <%= bc_num_slots %>",
+    "--ntasks=1",
+    "-c <%= num_cores %>",
+    "--mem=<%= sh_mem %>GB",
+    "--partition=<%= bc_queue %>",
+    <%- if features.length >0  -%>
+    "--constraint=<%= features %>"
+    <%- end -%>
+    <%- if reservation.length >0  -%>
+    "--reservation=<%= reservation %>"
+    <%- end -%>
+    ]
