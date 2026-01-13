@@ -41,13 +41,17 @@ attributes:
       - **default** - Use default, 4 GB per task.
       - **512M** - Use 512 MB.
       - **128G** - Use 128 GB.
-  x_module: "xfce/4.12"
   reservation:
     widget: "text_field"
     value: ""
     label: "Reservation"
     help: "Enter the reservation name here. Leave it blank if you are not using a reservation for submitting jobs."
-  #x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
+  features:
+    widget: "text_field"
+    value: ""
+    label: "Slurm Features"
+    help: "This field is optional. Enter any required Slurm feature here. To see an exhaustive list of Slurm features, please click <a href=\"https://docs.ccv.brown.edu/oscar/system-overview#hardware-details\">here</a>."
+      #x_module: "intltool/0.51.0 libwnck/3.24.1 xfce/4.16"
 form:
   - version
   - num_cores
@@ -57,6 +61,5 @@ form:
   - bc_account
   - bc_queue
   - reservation
-  - bc_vnc_resolution
+  - features
   - bc_email_on_started
-  - x_module
