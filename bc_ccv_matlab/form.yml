@@ -4,7 +4,7 @@ cluster: "slurmctld"
 attributes:
   modules:
     value: ""
-    help: "You can leave this blank if you are **not** loading additional modules. Otherwise load mulitple modules by module names seperated by spaces. For example to load mulitple  modules use: `R/3.5.1 python/2.7` "
+    help: "You can leave this blank if you are **not** loading additional modules. Otherwise load multiple modules by module names seperated by spaces. For example to load multiple  modules use: `R/3.5.1 gdal/3.11.0` "
   num_cores:
     widget: "number_field"
     label: "Number of cores"
