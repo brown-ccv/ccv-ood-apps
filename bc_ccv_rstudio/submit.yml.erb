@@ -8,7 +8,7 @@ script:
     "--ntasks=1",
     "-c <%= num_cores %>",
     "--mem=<%= sh_mem %>GB",
-    "--partition=<%= bc_queue %>",
+    "--partition=<%= partition %>",
     <%- if features.length >0  -%>
     "--constraint=<%= features %>"
     <%- end -%>
