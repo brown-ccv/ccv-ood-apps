@@ -39,6 +39,7 @@ attributes:
     help: "This defines the version of R you want to load."
     options:
       - [ "r/4.3.1" ]
+      - [ "r/4.4.0" ]
       - [ "r/4.5.1" ]
   reservation:
     widget: "text_field"
