@@ -64,10 +64,10 @@ export APPTAINER_BIND="${r_package_path}:/opt/R/site-library,${workdir}/run:/run
 #export APPTAINER_BIND="${r_package_path}:/usr/local/lib/R/site-library,${workdir}/run:/run,${workdir}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/var/lib/rstudio-server:/var/lib/rstudio-server"
 # Add data paths from use
 <%- if context.additional_data_path.blank? -%>
-export APPTAINER_BINDPATH="/gpfs/scratch/$USER,/users/$USER"
+export APPTAINER_BINDPATH="/oscar/scratch/$USER,/gpfs/scratch/$USER,/users/$USER,/oscar/home/$USER"
 <%- else -%>
 add_path=$(echo "<%= context.additional_data_path %>" |  xargs) 
-export APPTAINER_BINDPATH="${add_path},/gpfs/scratch/$USER,/users/$USER"
+export APPTAINER_BINDPATH="${add_path},/oscar/scratch/$USER,/gpfs/scratch/$USER,/users/$USER,/oscar/home/$USER"
 <%- end -%>
 # Do not suspend idle sessions.
 # # Alternative to setting session-timeout-minutes=0 in /etc/rstudio/rsession.conf
