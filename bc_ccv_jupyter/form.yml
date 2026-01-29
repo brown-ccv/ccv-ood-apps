@@ -23,7 +23,7 @@ attributes:
     value: "anaconda"
     options:
       - ["anaconda3","anaconda3/2023.09-0"]
-      - ["miniforge3","miniforge3/25.3.0-3-vrlt"]
+      - ["miniforge3","miniforge3/25.3.0-3-a6hh"]
   mode:
     widget: "radio"
     value: "0"

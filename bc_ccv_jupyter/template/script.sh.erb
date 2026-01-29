@@ -22,7 +22,7 @@ export XDG_RUNTIME_DIR=""
 module load <%= context.anaconda_module %>
 <%- else -%>
 module load anaconda3
-source /oscar/rt/9.6/25/spack/x86_64_v4/anaconda3-2023.09-0-fsg3wxhrl3b6bxjmqp25ps45ojhjn6yx/etc/profile.d/conda.sh
+source /oscar/rt/9.6/25/spack/x86_64_v3/anaconda3-2023.09-0-aqbcryind6ewgctu7wijluakv5mo3lo5/etc/profile.d/conda.sh
 <%- end -%>
 #2024/07/10 Prasad - In the above block, if a conda env is specified, the specified conda lmod env is loaded. If the conda_env field is blank, anaconda is loaded.
 #Explanation: The miniconda3 module does not have jupyter. Thus, if not conda env is specified and miniconda3 is chosen, Jupyter notebook doesn't start.
@@ -32,13 +32,13 @@ if [[ <%= context.anaconda_module%> =~ miniforge3* ]] && [[ <%= context.conda_en
     then
     #This block does not run if conda_env is blank
     echo -e "Env provided. Sourcing conda.sh from miniforge3."
-    source /oscar/rt/9.6/25/x86_64_v4/miniforge3-25.3.0-3-vrlttvipszefpzuft4gb7y4i755mxfu3/etc/profile.d/conda.sh
+    source ${MAMBA_ROOT_PREFIX}/etc/profile.d/conda.sh
 fi
 
 if [[ <%= context.anaconda_module%> =~ anaconda3* ]]
   then
   echo -e "No env provided. Sourcing conda.sh from anaconda3"
-    source /oscar/rt/9.6/25/spack/x86_64_v4/anaconda3-2023.09-0-fsg3wxhrl3b6bxjmqp25ps45ojhjn6yx/etc/profile.d/conda.sh
+    source /oscar/rt/9.6/25/spack/x86_64_v3/anaconda3-2023.09-0-aqbcryind6ewgctu7wijluakv5mo3lo5/etc/profile.d/conda.sh
 fi
 
 ##source /oscar/runtime/software/<%=context.anaconda_module%>/etc/profile.d/conda.sh
