@@ -1,0 +1,44 @@
+<p>
+  <strong>LibreChat Admin Username:</strong>
+  <code><%= "#{ENV["USER"]}@brown.edu" %></code>
+</p>
+<p>
+  <strong>LibreChat Admin Password:</strong>
+  <code><%= "#{password}!" %></code>
+</p>
+<div class='alert alert-warning'>
+  NOTE: The first response from each model you try will take some time as the model loads into memory, especially for larger models.
+  Subsequent responses will be faster.
+</div>
+<button class="btn btn-primary" id="librechat-connect-btn" onclick="autoLogin(this)">
+  <i class="fa fa-eye"></i> Connect to Ollama and LibreChat
+</button>
+
+<script>
+async function autoLogin(btn) {
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Logging in...';
+
+  const baseUrl = '/node/<%= host %>/<%= port %>';
+  const email   = '<%= ENV["USER"] %>@brown.edu';
+  const password = '<%= password %>!';
+
+  try {
+    const res = await fetch(baseUrl + '/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email: email, password: password })
+    });
+    if (!res.ok) {
+      console.warn('LibreChat auto-login returned status:', res.status);
+    }
+  } catch (e) {
+    console.warn('LibreChat auto-login fetch failed (will open anyway):', e);
+  }
+
+  window.open(baseUrl + '/', '_blank');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa fa-eye"></i> Connect to Ollama and LibreChat';
+}
+</script>

@@ -1,0 +1,223 @@
+# Batch Connect app configuration file for Ollama
+#
+
+---
+<%
+  config = {}
+  config_path = File.expand_path('config.env', __dir__)
+  if File.exist?(config_path)
+    File.read(config_path).each_line do |line|
+      line = line.strip
+      next if line.empty? || line.start_with?('#')
+      key, val = line.split('=', 2)
+      next if key.nil? || val.nil?
+      val = val.strip
+      val = val.gsub(/\A['"]|['"]\z/, '')
+      config[key.strip] = val
+    end
+  end
+%>
+cluster: "<%= config['CLUSTER'] %>"
+form:
+  - email
+  - selected_account_partition
+  - available_models
+  - show_advanced_customization
+  - auto_accounts
+  - auto_queues
+  - gpu_partitions
+  - default_partition
+  - add_model
+  - add_model_path
+  - bc_num_hours
+  - bc_num_slots
+  - num_cpus
+  - num_mem
+  - num_gpus
+  - addargs
+  - apptainer_image
+submit: submit.yml.erb
+id: submitForm
+name : submitForm
+title: Ollama Apptainer
+attributes:
+
+  email:
+    label: Email Address
+    help: |
+      Enter your email address if you would like to receive job notifications (start, finished, failed, etc..).  Otherwise, leave the field empty.
+
+    cacheable: true
+    widget: text_field
+
+  selected_account_partition:
+    label: Selected Account and Partition
+    html_options:
+      style: "display: none;"
+
+  available_models:
+    label: Default Available Models
+    cachable: false
+    html_options:
+      style: "display: none;"
+    value: <%= begin
+      manifests_dir = config['OLLAMA_MANIFESTS_DIR'] || ENV.fetch('OLLAMA_MANIFESTS_DIR', '/opt/apps/models/ollama-slim/manifests')
+      if Dir.exist?(manifests_dir)
+        models = []
+        Dir.glob("#{manifests_dir}/**/*").select { |f| File.file?(f) }.each do |file|
+          rel = file.sub(manifests_dir.chomp('/') + '/', '')
+          parts = rel.split('/')
+          next if parts.length < 3
+          # parts: [registry, namespace_or_library, model, tag]
+          # drop registry prefix
+          parts = parts[1..]
+          tag   = parts.last
+          model = parts[-2]
+          ns    = parts[0..-3].join('/')
+          if ns == 'library'
+            models << "#{model}:#{tag}"
+          else
+            models << "#{ns}/#{model}:#{tag}"
+          end
+        end
+        models.sort.uniq.join(',')
+      else
+        ""
+      end
+    end %>
+    help: |
+      ---------------------
+
+  show_advanced_customization:
+    label: Show Advanced Customization Fields
+    value: 0
+    cacheable: false
+    widget: 'check_box'
+    html_options:
+      data-hide-auto-accounts-when-un-checked: true
+      data-hide-auto-queues-when-un-checked: true
+      data-hide-bc-num-hours-when-un-checked: true
+      data-hide-num-cpus-when-un-checked: true
+      data-hide-num-mem-when-un-checked: true
+      data-hide-num-gpus-when-un-checked: true
+      data-hide-addargs-when-un-checked: true
+      data-hide-add-model-when-un-checked: true
+      data-hide-add-model-path-when-un-checked: true
+      data-hide-apptainer-image-when-un-checked: true
+      style: "border-color: black; border-width: 2px;"
+    help: |
+      Check the box above to reveal all Slurm configuration options
+
+  auto_accounts:
+    label: Account
+    cacheable: true
+    display: true
+
+  auto_queues:
+    label: Partition
+    cacheable: true
+    display: true
+
+  gpu_partitions:
+    widget: "hidden_field"
+    cachable: false
+    # Optional: comma-separated GPU partitions for filtering in form.js
+    # Example: "scavenger-gpu,priority-gpu"
+    value: <%= config['GPU_PARTITIONS'] || ENV['GPU_PARTITIONS'] %>
+
+  default_partition:
+    widget: "hidden_field"
+    cachable: false
+    # Optional: preferred default partition for form.js
+    # Example: "scavenger-gpu"
+    value: <%= config['DEFAULT_PARTITION'] || ENV['DEFAULT_PARTITION'] %>
+
+  add_model:
+    widget: "text_field"
+    label: "Alternative Ollama Models"
+    cacheable: false
+    help: |
+      List any models, comma-separated, that are not available by default
+      e.g. `deepseek-r1:7b, translategemma, olmo-3:latest` <br>
+      See the list of options here: https://ollama.com/search <br>
+      <em class="small">NOTE: adding models here will significantly increase the launch time for your session</em>
+      
+  add_model_path:
+    widget: "path_selector"
+    label: "Alternative Ollama Models Storage Path"
+    show_files: false
+    cacheable: false
+    popup_title: "Select the Folder"
+    favorites:
+      - <%= "/oscar/home/#{ENV['USER']}" %>
+      - <%= "/oscar/scratch/#{ENV['USER']}" %>
+    help: |
+      Select folder where you would like to store any models listed in the "Alternative Ollama Models" field above <br>
+      If no folder is selected, the models listed will be stored temporarily and destroyed after your Open OnDemand session concludes
+
+  bc_num_hours:
+    label: Walltime (Hours)
+    help: |
+      - Number of hours to allocate
+      - Exceeding walltime will automaticaly stop this job.
+    cacheable: false
+    widget: number_field
+    max: 168
+    min: 1
+    step: 1
+    value: 4
+
+  bc_num_slots: 1
+
+  num_cpus:
+    label: CPUs (Threads)
+    help: Number of CPU threads
+    cacheable: false
+    widget: number_field
+    max: 40
+    min: 2
+    step: 2
+    value: 4
+    display: true
+
+  num_mem:
+    label: Memory (GB/Gigabytes)
+    help: Total memory is available to all assigned threads!
+    cacheable: false
+    widget: number_field
+    max: 208
+    min: 1
+    step: 1
+    value: 8
+    display: true
+
+  num_gpus:
+    label: "GPUs"
+    help: "Number of GPU or CUDA devices."
+    cacheable: false
+    widget: number_field
+    max: 2
+    min: 0
+    step: 1
+    value: 1
+    display: true
+
+  addargs:
+    widget: "text_field"
+    cacheable: false
+    label: "Additional Slurm arguments"
+    help: "Any additional Slurm parameters e.g. `-w dcc-core-01`"
+
+  apptainer_image:  
+    widget: "path_selector"
+    popup_title: "Select Apptainer Image File"
+    help: |
+      Select an Apptainer Image (.sif/.simg) that includes Ollama, LibreChat, etc.
+    cacheable: false
+    directory: '/oscar/rt/9.6/ood_system/librechat-apptainer/'
+    value: '/oscar/rt/9.6/ood_system/librechat-apptainer/librechat.sif'
+    favorites: 
+      - "/oscar/rt/9.6/ood_system/librechat-apptainer"
+      - "/oscar/data/shared/containers"
+      - <%= "/oscar/home/#{ENV['USER']}" %>
+      - <%= "/oscar/scratch/#{ENV['USER']}" %>
