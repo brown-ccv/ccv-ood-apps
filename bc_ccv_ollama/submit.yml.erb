@@ -1,0 +1,36 @@
+<%-
+  argarr = addargs.split(" ")
+%>
+
+---
+batch_connect:
+  template: basic
+script:
+  queue_name: <%= auto_queues %>
+  native:
+    - "--account"
+    - "<%= auto_accounts %>"
+    - "--nodes"
+    - "<%= bc_num_slots.blank? ? 1 : bc_num_slots.to_i %>"
+    - "--ntasks"
+    - "<%= bc_num_slots.blank? ? 1 : bc_num_slots.to_i %>"
+    - "--cpus-per-task"
+    - "<%= num_cpus.blank? ? 1 : num_cpus.to_i %>"
+    - "--mem"
+    - "<%= num_mem.blank? ? 1 : num_mem.to_i %>G"
+
+    <%- unless email.blank? -%>
+    - "--mail-user"
+    - "<%= email %>"
+    - "--mail-type"
+    - "BEGIN,END,FAIL"
+    <%- end -%>
+
+    <%- if num_gpus.to_i >0 -%>
+    - "--gres"
+    - "gpu:<%= num_gpus.to_i %>"
+    <%- end -%>
+    
+    <%- argarr.each do |arg| %>
+    - "<%= arg %>"
+    <%- end %>

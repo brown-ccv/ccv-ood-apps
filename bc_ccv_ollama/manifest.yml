@@ -1,0 +1,12 @@
+---
+name: Ollama
+category: Interactive Apps
+subcategory: AI
+role: batch_connect
+description: |
+  This app will launch a LibreChat UI with Ollama on one or more nodes in the compute cluster.
+
+icon: "icon.png"
+tile:
+  title: "Ollama"
+  sub_caption: ""

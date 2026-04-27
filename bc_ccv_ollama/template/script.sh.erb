@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+#Command Tracing
+set -x
+
+# OOD site config — read from config.env at app root
+<%
+  _config = {}
+  _config_path = File.expand_path('../../config.env', __FILE__)
+  if File.exist?(_config_path)
+    File.read(_config_path).each_line do |line|
+      line = line.strip
+      next if line.empty? || line.start_with?('#')
+      key, val = line.split('=', 2)
+      next if key.nil? || val.nil?
+      _config[key.strip] = val.strip.gsub(/\A['"]|['"]\z/, '')
+    end
+  end
+%>
+OOD_BASE_URL="<%= _config['OOD_BASE_URL'] || 'https://ood.ccv.brown.edu' %>"
+
+# Benchmark info
+echo "TIMING - Starting main script at: $(date)"
+
+# Check if nvidia-smi exists
+if ! command -v nvidia-smi >/dev/null 2>&1; then
+    echo "ERROR: nvidia-smi not found"
+    exit 1
+fi
+
+# Check for detected GPUs
+GPU_COUNT=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | wc -l)
+
+if [ "$GPU_COUNT" -eq 0 ]; then
+    echo "ERROR: No GPUs detected"
+    nvidia-smi
+    exit 1
+fi
+
+echo "GPUs detected: $GPU_COUNT"
+
+# Detect and Setup Cuda Devices
+if [ -n "$CUDA_VISIBLE_DEVICES" ]; then
+  export APPTAINERENV_CUDA_VISIBLE_DEVICES="$CUDA_VISIBLE_DEVICES"
+fi
+
+# Ensure We have a TMPDIR
+if [ -z "$TMPDIR" ] || [ "$TMPDIR" == "/tmp" ]; then
+  TMPDIR="$(mktemp -d)"
+  export TMPDIR
+fi
+
+# If user entered diff models to use, override OLLAMA_MODELS var
+# and the OLLAMA_MODELS_DIR var
+<%
+custom_models = context.add_model.to_s.strip
+custom_model_path = context.add_model_path.to_s.strip
+%>
+<% if !custom_models.empty? %>
+  export OLLAMA_MODELS="<%= custom_models %>"
+  <% if !custom_model_path.empty? %>
+    export OLLAMA_MODELS_DIR="<%= custom_model_path %>"
+  <% else %>
+    export OLLAMA_MODELS_DIR="/tmp"
+  <% end %>
+<% end %>
+
+# Set working directory to home directory
+cd "${HOME}"
+echo $USER
+export PORT=$LIBRE_PORT 
+export OLLAMA_PORT=11434 
+
+## If we ever decide users should have a way to keep their LibreChat configs,
+## set both LIBRECHAT_DATA_DIR and MONGO_DATA_DIR. Leaving them blank will
+## instead keep the data in /tmp
+# export LIBRECHAT_DATA_DIR="$HOME/librechat/data" 
+# export MONGO_DATA_DIR="$HOME/librechat/mongo" 
+export OLLAMA_MODELS_DIR
+export OLLAMA_MODELS
+export ADMIN_EMAIL="${USER}@brown.edu"
+export ADMIN_PASSWORD=$LIBRE_PW
+
+export DOMAIN_CLIENT="${OOD_BASE_URL}/node/${host}/${port}"
+export DOMAIN_SERVER="${OOD_BASE_URL}/node/${host}/${port}"
+export BASE_URL="${OOD_BASE_URL}/node/${host}/${port}"
+export PUBLIC_URL="/node/${host}/${port}"
+
+# Force a clean PATH inside the container so host module-loaded binaries
+# (e.g. Oscar's ollama-0.17.7) don't shadow the container's /usr/bin/ollama
+export APPTAINERENV_PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Ollama stability: only keep one model loaded at a time so switching models
+# doesn't cause GPU memory contention / hangs
+export APPTAINERENV_OLLAMA_MAX_LOADED_MODELS=1
+export APPTAINERENV_OLLAMA_NUM_PARALLEL=1
+
+APPTAINERENV_OLLAMA_SKIP_PULL=1 apptainer run --nv --writable-tmpfs --bind "/oscar/data/shared/ollama_models:/models" "$LIBRE_IMAGE"
