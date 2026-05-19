@@ -10,7 +10,7 @@ attributes:
     label: "Number of cores"
     value: 1
     help: |
-      Maximum of 32 tasks is allowed 
+      Maximum of 32 tasks is allowed
     min: 1
     max: 32
     step: 1
@@ -41,6 +41,16 @@ attributes:
       - **default** - Use default, 4 GB per task.
       - **512M** - Use 512 MB.
       - **128G** - Use 128 GB.
+  num_gpus:
+    widget: "number_field"
+    label: "Number of GPUs"
+    value: 0
+    min: 0
+    max: 4
+    step: 1
+    help: |
+      Number of GPUs to allocate. Set to 0 for no GPU.
+      Make sure to select a GPU-enabled partition (e.g., `gpu`) when requesting GPUs.
   reservation:
     widget: "text_field"
     value: ""
@@ -55,6 +65,7 @@ attributes:
 form:
   - version
   - num_cores
+  - num_gpus
   - bc_num_hours
   - memtask
   - modules
