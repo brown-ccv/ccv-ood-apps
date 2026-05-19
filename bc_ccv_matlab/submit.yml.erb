@@ -6,13 +6,16 @@ script:
     - "-N"
     - "1"
     - "-n"
-    - "1" 
+    - "1"
     - "-c"
     - "<%= num_cores %>"
     - "--partition=<%= bc_queue %>"
     <%- if memtask != "default" -%>
     - "--mem"
     - "<%= memtask %>"
+    <%- end -%>
+    <%- if num_gpus.to_i > 0 -%>
+    - "--gres=gpu:<%= num_gpus %>"
     <%- end -%>
     <%- if reservation.length >0  -%>
     - "--reservation=<%= reservation %>"
